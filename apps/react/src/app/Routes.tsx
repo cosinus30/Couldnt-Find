@@ -1,8 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import {
-  About,
-  Contact,
+  Tutorials,
   ForgotPasswordPage,
   Login, MailErrorPage,
   MailSuccessPage,
@@ -10,7 +9,9 @@ import {
   OAuth2RedirectHandler,
   Profile,
   Register,
-  ResetPassword
+  ResetPassword,
+  WriteYourStory,
+  TutorialDetail
 } from './pages';
 
 export const Routes = ({ children, ...props }) => {
@@ -18,8 +19,9 @@ export const Routes = ({ children, ...props }) => {
     <Router {...props}>
       {children}
       <Route exact path="/" component={MainPage} />
-      <Route path="/about" component={About} />
-      <Route path="/contact" component={Contact} />
+      <Route path="/tutorials/:articleId" component={TutorialDetail} />
+      <Route exact path="/tutorials" component={Tutorials} />
+      <Route path="/write-your-story" component={WriteYourStory} />
       <Route path="/forgotpassword" component={ForgotPasswordPage} />
       <Route path="/resetpassword" component={ResetPassword} />
       <Route path="/profile" component={Profile} />
