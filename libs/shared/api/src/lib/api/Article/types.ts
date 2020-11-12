@@ -33,4 +33,5 @@ export interface ArticlesResponse {
     author: User;
     likeCount: number;
     bookmarkCount: number;
+    viewCount: number;
 }
