@@ -1,22 +1,17 @@
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { faBookmark as emptyFaBookmark, faHeart as emptyFaHeart } from '@fortawesome/fontawesome-free-regular'
-import { faBookmark } from '@fortawesome/free-solid-svg-icons'
 import { api, ArticleResponse } from '@internship/shared/api';
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Col, Container, Row, Spinner } from 'react-bootstrap';
-import { useLocation, useParams } from 'react-router-dom'
-import { faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { DetailedCard, IconButton, IconButtonRow } from '@internship/ui';
+import { Col, Container, Row } from 'react-bootstrap';
+import { useParams } from 'react-router-dom'
+import { DetailedCard, Spinner } from '@internship/ui';
 
-export const TutorialDetail = (props) => {
-    const { articleId } = useParams();
+export const ArticleDetail = (props) => {
+    const { articleType ,articleId } = useParams();
     const [articleDetail, setArticleDetail] = useState<ArticleResponse>();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         api.article
-            .getTutorialById(articleId)
+            .getArticleById(articleType ,articleId)
             .then((response) => {
                 setArticleDetail(response);
                 setLoading(false);
@@ -47,7 +42,8 @@ export const TutorialDetail = (props) => {
         }
     }
 
-    const bookmarkHandler = (articleId: number) => {
+    const bookmarkHandler = (articleId: number, event) => {
+        event.preventDefault();
         if (articleDetail.bookmarked)
             api.article.unbookmark(articleId)
                 .then((response) => {
@@ -67,15 +63,14 @@ export const TutorialDetail = (props) => {
         }
     }
 
-    let rendering = <Spinner variant="primary" animation="border" 
-    style ={ { position: "fixed", top: "50%", left: "50%"}} ></Spinner>
+    let rendering = <Spinner/>
     if (!loading) {
         rendering = (
             <DetailedCard articleDetail={articleDetail}
                 userInteraction={{
                     bookmarked: articleDetail.bookmarked,
                     liked: articleDetail.liked,
-                    bookmarkHandler: () => bookmarkHandler(articleDetail.article.id),
+                    bookmarkHandler: (event) => bookmarkHandler(articleDetail.article.id, event),
                     likeHandler: () => likeHandler(articleDetail.article.id)
                 }}>
             </DetailedCard>
