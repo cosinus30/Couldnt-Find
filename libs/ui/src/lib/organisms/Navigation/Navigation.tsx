@@ -8,6 +8,7 @@ import { logoutAsync } from '@internship/store/authentication';
 import { useDispatch } from 'react-redux';
 import { Popup, PopupButton, Search } from '../../molecules';
 import { getAccessToken, getRefreshToken } from '@internship/shared/utils';
+import image from './brand.png';
 
 export const Navigation = () => {
   const { isAuthenticated } = useAuthentication();
@@ -16,7 +17,6 @@ export const Navigation = () => {
   const history = useHistory();
   const location = useLocation();
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
-
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 
 
@@ -61,7 +61,7 @@ export const Navigation = () => {
           <li className="navbar-brand">
             <NavLink exact to="/" className="nav-link"
               onClick={() => dispatch({ type: '@temp/ERROR_REQUIRED', payload: null })}>
-              Home
+              <img src={image} style={{ width: '40px', height: '100%' }} />
             </NavLink>
           </li>
           <li className="nav-link">
@@ -76,23 +76,37 @@ export const Navigation = () => {
               Tutorials
             </NavLink>
           </li>
-          {isAuthenticated ? (
-            <li className="nav-link">
-              <NavLink
-                to="/write-your-story"
-                className="nav-link"
-                onClick={() => {
-                  dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
-                  dispatch({ type: '@temp/SUCCESS_REQUIRED', payload: null });
-                }}
-              >
-                Write your story
-                        </NavLink>
-            </li>
-          ) : (
+          <li className="nav-link">
+            <NavLink
+              to="/engineerings"
+              className="nav-link"
+              onClick={() => {
+                dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
+                dispatch({ type: '@temp/SUCCESS_REQUIRED', payload: null });
+              }}
+            >
+              Engineerings
+            </NavLink>
+          </li>
+          <li className="nav-link">
+            <NavLink
+              to="/insights"
+              className="nav-link"
+              onClick={() => {
+                dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
+                dispatch({ type: '@temp/SUCCESS_REQUIRED', payload: null });
+              }}
+            >
+              Insights
+            </NavLink>
+          </li>
+        </Nav>
+        {
+          isAuthenticated ? (
+            <Nav>
               <li className="nav-link">
                 <NavLink
-                  to="/login"
+                  to="/write-your-story"
                   className="nav-link"
                   onClick={() => {
                     dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
@@ -102,67 +116,75 @@ export const Navigation = () => {
                   Write your story
                         </NavLink>
               </li>
-            )
-
-
-          }
-
-        </Nav>
-        {isAuthenticated ? (
-          <Nav>
-            <NavDropdown alignRight title={<FaUserAlt />} id="basic-nav-dropdown">
-              <NavLink
-                className="dropdown-item"
-                to="/profile"
-                type="button"
-                onClick={() => {
-                  dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
-                  dispatch({ type: '@temp/SUCCESS_REQUIRED', payload: null });
-                }}
-              >
-                Profile
+              <li className="nav-link float-right">
+                <NavDropdown alignRight title={<FaUserAlt />} id="basic-nav-dropdown">
+                  <NavLink
+                    className="dropdown-item"
+                    to="/profile"
+                    type="button"
+                    onClick={() => {
+                      dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
+                      dispatch({ type: '@temp/SUCCESS_REQUIRED', payload: null });
+                    }}
+                  >
+                    Profile
                 </NavLink>
-              <NavDropdown.Item type="button" to={location.pathname} onClick={handleOpen}>
-                Logout
+                  <NavDropdown.Item type="button" to={location.pathname} onClick={handleOpen}>
+                    Logout
                 </NavDropdown.Item>
-              <Popup show={show} onHide={handleClose}>
-                Sistemden Çıkıyorsunuz Emin misiniz?
+                  <Popup show={show} onHide={handleClose}>
+                    Sistemden Çıkıyorsunuz Emin misiniz?
                   <PopupButton variant="secondary" onClick={handleClose}>
-                  HAYIR
+                      HAYIR
                   </PopupButton>
-                <PopupButton type="submit" variant="primary" onClick={handleShow}>
-                  EVET
+                    <PopupButton type="submit" variant="primary" onClick={handleShow}>
+                      EVET
                   </PopupButton>
-              </Popup>
-            </NavDropdown>
-          </Nav>
-        ) : (
-            <Nav>
-              <NavDropdown className="nav-link uk-align-right" title="Account" id="basic-nav-dropdown">
-                <NavLink
-                  className="dropdown-item"
-                  to="/register"
-                  onClick={() => {
-                    dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
-                    dispatch({ type: '@temp/SUCCESS_REQUIRED', payload: null });
-                  }}
-                >
-                  Sign Up
-                </NavLink>
-                <NavLink
-                  className="dropdown-item"
-                  to="/login"
-                  onClick={() => {
-                    dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
-                    dispatch({ type: '@temp/SUCCESS_REQUIRED', payload: null });
-                  }}
-                >
-                  Sign In
-                </NavLink>
-              </NavDropdown>
+                  </Popup>
+                </NavDropdown>
+              </li>
             </Nav>
-          )}
-      </div>
-    </Navbar>
+          ) : (
+              <Nav>
+                <li className="nav-link">
+                  <NavLink
+                    to="/login"
+                    className="nav-link"
+                    onClick={
+                      () => {
+                        dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
+                        dispatch({ type: '@temp/SUCCESS_REQUIRED', payload: null });
+                      }
+                    }>
+                    Write your story
+                        </NavLink>
+                </li>
+                <NavDropdown className="nav-link uk-align-right" title="Account" id="basic-nav-dropdown">
+                  <NavLink
+                    className="dropdown-item"
+                    to="/register"
+                    onClick={() => {
+                      dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
+                      dispatch({ type: '@temp/SUCCESS_REQUIRED', payload: null });
+                    }}
+                  >
+                    Sign Up
+                </NavLink>
+                  <NavLink
+                    className="dropdown-item"
+                    to="/login"
+                    onClick={() => {
+                      dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
+                      dispatch({ type: '@temp/SUCCESS_REQUIRED', payload: null });
+                    }}
+                  >
+                    Sign In
+                </NavLink>
+                </NavDropdown>
+              </Nav>
+            )
+        }
+      </div >
+    </Navbar >
   );
 };
