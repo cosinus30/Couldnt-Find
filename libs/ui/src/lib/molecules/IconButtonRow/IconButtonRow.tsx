@@ -27,8 +27,8 @@ export const IconButtonRow: React.FC<IconButtonRowProps> = ({ children, ...props
                     : <IconButton><FontAwesomeIcon icon={faBookmark} onClick={props.bookmarkHandler} /></IconButton>
                 }
                 {props.liked
-                    ? <IconButton><FontAwesomeIcon icon={faLiked} onClick={props.bookmarkHandler} /></IconButton>
-                    : <IconButton><FontAwesomeIcon icon={faHeart} onClick={props.bookmarkHandler} /></IconButton>
+                    ? <IconButton onClick={props.likeHandler}><FontAwesomeIcon icon={faLiked}  /></IconButton>
+                    : <IconButton onClick={props.likeHandler} ><FontAwesomeIcon icon={faHeart}/></IconButton>
                 }
             </Col>
         </Row>
