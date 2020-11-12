@@ -26,24 +26,25 @@ export const TutorialDetail = (props) => {
             })
     }, []);
 
-    const unlikeHandler = (articleId: number) => {
-        api.article.unlike(articleId)
-            .then((response) => {
-                setArticleDetail({ ...articleDetail, liked: false });
-            })
-            .catch((error) => {
-                console.log("something went wrong");
-            })
-    }
-
     const likeHandler = (articleId: number) => {
-        api.article.like(articleId)
+        if(articleDetail.liked)
+        {            
+            api.article.unlike(articleId)
+                .then((response) => {
+                    setArticleDetail({ ...articleDetail, liked: false });
+                })
+                .catch((error) => {
+                    console.log("something went wrong");
+                })
+        }else{
+            api.article.like(articleId)
             .then((response) => {
                 setArticleDetail({ ...articleDetail, liked: true });
             })
             .catch((error) => {
                 console.log("something went wrong");
             })
+        }
     }
 
     const bookmarkHandler = (articleId: number) => {
@@ -51,7 +52,6 @@ export const TutorialDetail = (props) => {
             api.article.unbookmark(articleId)
                 .then((response) => {
                     setArticleDetail({ ...articleDetail, bookmarked: false })
-                    console.log("Bookmark set to false")
                 })
                 .catch((error) => {
                     console.log("Something went wrong!");
@@ -60,8 +60,6 @@ export const TutorialDetail = (props) => {
             api.article.bookmark(articleId)
                 .then((response) => {
                     setArticleDetail({ ...articleDetail, bookmarked: true })
-                    console.log("Bookmark set to true")
-
                 })
                 .catch((error) => {
                     console.log("Something went wrong!");
@@ -69,8 +67,8 @@ export const TutorialDetail = (props) => {
         }
     }
 
-    let rendering = <Spinner animation="border"></Spinner>
-    let likeButton = <Button variant="none" className="float-right" onClick={() => likeHandler(articleDetail.article.id)}><FontAwesomeIcon icon={emptyFaHeart} /></Button>
+    let rendering = <Spinner variant="primary" animation="border" 
+    style ={ { position: "fixed", top: "50%", left: "50%"}} ></Spinner>
     if (!loading) {
         rendering = (
             <DetailedCard articleDetail={articleDetail}
@@ -82,17 +80,12 @@ export const TutorialDetail = (props) => {
                 }}>
             </DetailedCard>
         );
-        if (articleDetail.liked) {
-            likeButton = <IconButton onClick={() => unlikeHandler(articleDetail.article.id)}><FontAwesomeIcon icon={faHeart} /></IconButton>
-        }
-
     }
 
     return (
         <Container>
             <Row className="justify-content-md-center">
                 <Col md="9">
-                    {likeButton}
                     {rendering}
                 </Col>
             </Row>

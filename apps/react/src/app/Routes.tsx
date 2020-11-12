@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import {
   Tutorials,
   ForgotPasswordPage,
@@ -23,12 +23,11 @@ export const Routes = ({ children, ...props }) => {
     <Router {...props}>
       {children}
       <Route exact path="/" component={MainPage} />
-      <Route path="/tutorials/:articleId" component={TutorialDetail} />
-      <Route exact path="/tutorials" component={Tutorials} />
-      <Route path="/insights/:articleId" component={InsightDetail} />
-      <Route exact path="/insights" component={Insights} />
-      <Route path="/engineerings/:articleId" component={EngineeringDetail} />
-      <Route exact path="/engineerings" component={Engineerings} />
+      <Switch>
+        <Route path="/:articleType/:articleId" 
+          component={() => <TutorialDetail {...props} key={window.location.pathname}/>} />
+        <Route path="/:articleType" component={() => <Tutorials {...props} key={window.location.pathname}/>} />
+      </Switch>
       <Route path="/write-your-story" component={WriteYourStory} />
       <Route path="/forgotpassword" component={ForgotPasswordPage} />
       <Route path="/resetpassword" component={ResetPassword} />
