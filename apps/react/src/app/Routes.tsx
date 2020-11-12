@@ -11,7 +11,11 @@ import {
   Register,
   ResetPassword,
   WriteYourStory,
-  TutorialDetail
+  TutorialDetail,
+  Insights,
+  InsightDetail,
+  Engineerings,
+  EngineeringDetail
 } from './pages';
 
 export const Routes = ({ children, ...props }) => {
@@ -21,6 +25,10 @@ export const Routes = ({ children, ...props }) => {
       <Route exact path="/" component={MainPage} />
       <Route path="/tutorials/:articleId" component={TutorialDetail} />
       <Route exact path="/tutorials" component={Tutorials} />
+      <Route path="/insights/:articleId" component={InsightDetail} />
+      <Route exact path="/insights" component={Insights} />
+      <Route path="/engineerings/:articleId" component={EngineeringDetail} />
+      <Route exact path="/engineerings" component={Engineerings} />
       <Route path="/write-your-story" component={WriteYourStory} />
       <Route path="/forgotpassword" component={ForgotPasswordPage} />
       <Route path="/resetpassword" component={ResetPassword} />
