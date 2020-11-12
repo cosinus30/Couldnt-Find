@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Col, Row } from 'react-bootstrap';
 import { IconButton } from '../../atoms';
 import { faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { faBookmark } from '@fortawesome/free-regular-svg-icons';
-import { faBookmark as faBookmarked } from '@fortawesome/free-solid-svg-icons';
+import { faBookmark, faHeart } from '@fortawesome/free-regular-svg-icons';
+import { faBookmark as faBookmarked, faHeart as faLiked} from '@fortawesome/free-solid-svg-icons';
 
 
 export interface IconButtonRowProps {
@@ -25,6 +25,10 @@ export const IconButtonRow: React.FC<IconButtonRowProps> = ({ children, ...props
                 {props.bookmarked
                     ? <IconButton><FontAwesomeIcon icon={faBookmarked} onClick={props.bookmarkHandler} /></IconButton>
                     : <IconButton><FontAwesomeIcon icon={faBookmark} onClick={props.bookmarkHandler} /></IconButton>
+                }
+                {props.liked
+                    ? <IconButton><FontAwesomeIcon icon={faLiked} onClick={props.bookmarkHandler} /></IconButton>
+                    : <IconButton><FontAwesomeIcon icon={faHeart} onClick={props.bookmarkHandler} /></IconButton>
                 }
             </Col>
         </Row>
