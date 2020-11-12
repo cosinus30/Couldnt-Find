@@ -19,6 +19,11 @@ export class ArticleResource {
         return this.axios.get('articles/engineerings', this.axiosRequestConfig).then((response) => { return response.data })
     };
 
+    getArticles = (articleType: string): Promise<ArticlesResponse[]> => {
+        return this.axios.get('articles/'+ articleType, this.axiosRequestConfig)
+        .then((response) => { return response.data })
+    };
+
     getTutorialById = (id: number): Promise<ArticleResponse> => this.axios.get("articles/tutorials/" + id, this.axiosRequestConfig).then((response) => { return response.data });
     getInsightById = (id: number): Promise<ArticleResponse> => this.axios.get("articles/insights/" + id, this.axiosRequestConfig).then((response) => { return response.data });
     getEngineeringById = (id: number): Promise<ArticleResponse> => this.axios.get("articles/engineerings/" + id, this.axiosRequestConfig).then((response) => { return response.data });
