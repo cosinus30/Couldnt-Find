@@ -8,7 +8,3 @@ export * from './ForgotPassword';
 export * from './WriteYourStory';
 export * from './Tutorial/Tutorials';
 export * from './Tutorial/TutorialDetail';
-export * from './Engineering/Engineerings';
-export * from './Engineering/EngineeringDetail';
-export * from './Insight/Insights';
-export * from './Insight/InsightDetail';
