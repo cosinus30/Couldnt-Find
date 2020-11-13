@@ -3,15 +3,21 @@ import {
     CreateArticleRequest
 } from '@internship/shared/types';
 
-import { ArticleResponse, ArticlesResponse } from './index'
+import { ArticleResponse, PageResponse } from './index'
+import { isNullOrUndefined } from 'util';
 
 export class ArticleResource {
     constructor(private axios: AxiosInstance = axiosStatic, private axiosRequestConfig: AxiosRequestConfig = {}) { }
 
     createArticle = (data: CreateArticleRequest): Promise<any> => this.axios.post("articles/", data, this.axiosRequestConfig).then((r) => r.data);
 
-    getArticles = (articleType: string): Promise<ArticlesResponse[]> => {
-        return this.axios.get('articles/'+ articleType, this.axiosRequestConfig)
+    getArticles = (articleType: string, pageNo?: string): Promise<PageResponse> => {
+        if(isNullOrUndefined(pageNo))
+            pageNo="0";
+        else{
+            pageNo =  (Number.parseInt(pageNo) - 1).toString();
+        }
+        return this.axios.get('articles/'+ articleType + "?page=" + pageNo, this.axiosRequestConfig)
         .then((response) => { return response.data })
     };
 

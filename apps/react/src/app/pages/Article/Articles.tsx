@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardDeck, Col, Container, Row, Spinner } from 'react-bootstrap';
-import { api, ArticlesResponse } from '@internship/shared/api';
+import { Card, CardDeck, Col, Container, Pagination, Row, Spinner } from 'react-bootstrap';
+import { api, PageResponse } from '@internship/shared/api';
 import { BiChevronRight } from 'react-icons/bi';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, Link} from 'react-router-dom';
 import { faBookmark, faEye, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useQuery } from '@internship/shared/hooks';
 
 
 export const Articles = () => {
   const history = useHistory();
   const {articleType} = useParams();
+  const query = useQuery();
   
-  const [articles, setarticles] = useState<ArticlesResponse[]>();  
+  const [page, setPage] = useState<PageResponse>();  
   const [sessionInfo, setSessionInfo] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log(articleType);
+    console.log(query.get("page"));
     api.article
-      .getArticles(articleType)
+      .getArticles(articleType, query.get("page"))
       .then((response) => {
-        setarticles(response);
+        console.log(response);
+        setPage(response);
         setLoading(false);
       })
       .catch((e) => console.error(e));
@@ -32,11 +35,24 @@ export const Articles = () => {
       pathname: articleType +'/' + id,
     });
   }
+  let items = [];
+
+
+  let paginationBasic = null;
+  
 
   let rendering = <Spinner animation="border"></Spinner>
   if (!loading) {
+    for (let number = 1; number <= page.totalPages; number++) {
+      items.push(
+        <Pagination.Item key={number} active={number === page.number+1} href={`/${articleType}?page=${number}`}>
+          {number}
+        </Pagination.Item>,
+      );
+    }
+
     rendering = (
-      articles?.map((article) => (
+      page.content?.map((article) => (
         <Col key={article.id} md="6" xs="12" lg="4">
           <Card border="primary" >
             <Card.Img className="img-fluid" onClick={() => goToLinkHandler(article.id)} style={{height: "15rem" }} variant="top" src="../favicon.ico" />
@@ -72,13 +88,15 @@ export const Articles = () => {
                 <small className="text-muted float-right">Written by {article.author.username}</small>
                 </Col>
               </Row>
-
-
-
             </Card.Footer>
           </Card>
         </Col>
-      )))
+      )));
+    paginationBasic = (
+        <div>
+          <Pagination>{items}</Pagination>
+        </div>
+      )
   }
 
   return (
@@ -88,6 +106,7 @@ export const Articles = () => {
           <h1>{articleType}</h1>
         </Col>
         {rendering}
+        {paginationBasic}
       </Row>
     </Container>
   );

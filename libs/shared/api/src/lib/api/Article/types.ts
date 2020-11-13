@@ -22,7 +22,7 @@ interface Article {
     author: User;
 }
 
-export interface ArticlesResponse {
+interface ArticlesResponse {
     content: string;
     published: boolean;
     releaseDate: Date;
@@ -34,4 +34,14 @@ export interface ArticlesResponse {
     likeCount: number;
     bookmarkCount: number;
     viewCount: number;
+}
+
+export interface PageResponse{
+    content: ArticlesResponse[];
+    totalPages: number;
+    last: boolean;
+    totalElements: number;
+    first:boolean;
+    empty:boolean;
+    number: number;
 }
