@@ -7,6 +7,7 @@ import { faBookmark, faEye, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useQuery } from '@internship/shared/hooks';
 import { Cards } from '@internship/ui';
+import { QueryParams } from '@internship/shared/types';
 
 
 export const Articles = () => {
@@ -17,11 +18,11 @@ export const Articles = () => {
   const [page, setPage] = useState<PageResponse>();  
   const [sessionInfo, setSessionInfo] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [sortType, setSortType] = useState(QueryParams.defaultSort);
 
   useEffect(() => {
-    console.log(query.get("page"));
     api.article
-      .getArticles(articleType, query.get("page"))
+      .getArticles(articleType, query.get("page"), sortType)
       .then((response) => {
         console.log(response);
         setPage(response);
@@ -57,11 +58,15 @@ export const Articles = () => {
 
   return (
     <Container>
-      <Row>
+      <Row >
         <Col md={12}>
-          <h1 className="text-light">{articleType}</h1>
+          <h1 className="text-light">{articleType.charAt(0).toUpperCase() + articleType.slice(1)}</h1>
         </Col>
+      </Row>
+      <Row className="justify-content-center">
         {rendering}
+      </Row>
+      <Row className="justify-content-center">
         {paginationBasic}
       </Row>
     </Container>
