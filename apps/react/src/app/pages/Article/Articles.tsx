@@ -6,6 +6,7 @@ import { useHistory, useParams, Link} from 'react-router-dom';
 import { faBookmark, faEye, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useQuery } from '@internship/shared/hooks';
+import { Cards } from '@internship/ui';
 
 
 export const Articles = () => {
@@ -29,12 +30,7 @@ export const Articles = () => {
       .catch((e) => console.error(e));
   }, [sessionInfo]);
 
-  const goToLinkHandler = (id) => {
-    console.log(id);
-    history.push({
-      pathname: articleType +'/' + id,
-    });
-  }
+
   let items = [];
 
 
@@ -51,47 +47,7 @@ export const Articles = () => {
       );
     }
 
-    rendering = (
-      page.content?.map((article) => (
-        <Col key={article.id} md="6" xs="12" lg="4">
-          <Card border="primary" >
-            <Card.Img className="img-fluid" onClick={() => goToLinkHandler(article.id)} style={{height: "15rem" }} variant="top" src="../favicon.ico" />
-            <Card.Body>
-              <Card.Title>{article.heading}</Card.Title>
-              <Card.Text>
-                {article.content.substr(0, 150)}...
-            </Card.Text>
-              <Card.Link onClick={() => goToLinkHandler(article.id)} className="float-right"> Go to article<BiChevronRight /> </Card.Link>
-            </Card.Body>
-            <Card.Footer>
-              <Row>
-                <Col>
-                  <Row>
-                    <Col xs={12}>
-                      <small className="float-left">
-                        <FontAwesomeIcon icon={faHeart}/><span className="text-muted"> {article.likeCount} likes</span> 
-                      </small>
-                    </Col>
-                    <Col xs={12}>
-                      <small className="float-left">
-                        <FontAwesomeIcon icon={faEye}/><span className="text-muted"> {article.viewCount} views</span> 
-                      </small>
-                    </Col>
-                    <Col xs={12}>
-                      <small className="float-left">
-                        <FontAwesomeIcon icon={faBookmark}/><span className="text-muted"> {article.bookmarkCount} bookmarks</span> 
-                      </small>
-                    </Col>
-                  </Row>
-                </Col>
-                <Col>
-                <small className="text-muted float-right">Written by {article.author.username}</small>
-                </Col>
-              </Row>
-            </Card.Footer>
-          </Card>
-        </Col>
-      )));
+    rendering = (<Cards page={page} articleType={articleType}/>);
     paginationBasic = (
         <div>
           <Pagination>{items}</Pagination>
@@ -103,7 +59,7 @@ export const Articles = () => {
     <Container>
       <Row>
         <Col md={12}>
-          <h1>{articleType}</h1>
+          <h1 className="text-light">{articleType}</h1>
         </Col>
         {rendering}
         {paginationBasic}
