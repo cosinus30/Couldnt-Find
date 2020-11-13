@@ -42,8 +42,8 @@ export const Cards: React.FC<CardProps> = ({ children, ...props }) => {
               {article.content.substr(0, 150)}...
           </RBCard.Text>
           </RBCard.Body>
-          <RBCard.Footer>
-            <Row>
+          <hr className="bg-primary my-1"/>
+            <Row className="mx-1 my-1">
               <Col>
                 <Row>
                   <Col xs={12}>
@@ -63,11 +63,10 @@ export const Cards: React.FC<CardProps> = ({ children, ...props }) => {
                   </Col>
                 </Row>
               </Col>
-              <Col>
+              <Col className="my-auto">
               <small className="text-muted float-right">Written by {article.author.username}</small>
               </Col>
             </Row>
-          </RBCard.Footer>
         </StyledRBCard>
       </Col>
     ))
