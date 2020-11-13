@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
 import { NavLink, useHistory, useLocation } from 'react-router-dom';
-import { Nav, Navbar, NavDropdown, NavLink as linko } from 'react-bootstrap';
+import { Dropdown, Nav, Navbar, NavDropdown, NavLink as linko } from 'react-bootstrap';
 import { FaUserAlt } from 'react-icons/all';
 import { useAuthentication } from '@internship/shared/hooks';
 import { logoutAsync } from '@internship/store/authentication';
@@ -9,6 +9,9 @@ import { useDispatch } from 'react-redux';
 import { Popup, PopupButton, Search } from '../../molecules';
 import { getAccessToken, getRefreshToken } from '@internship/shared/utils';
 import image from './brand.png';
+import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
+import DropdownMenu from 'react-bootstrap/esm/DropdownMenu';
+import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 
 export const Navigation = () => {
   const { isAuthenticated } = useAuthentication();
@@ -43,7 +46,7 @@ export const Navigation = () => {
 
 
   return (
-    <Navbar sticky="top" className="navbar-expand-sm bg-primary">
+    <Navbar sticky="top" className="navbar-expand-sm bg-secondary">
       <button
         className="custom-toggler navbar-toggler"
         type="button"
@@ -64,10 +67,10 @@ export const Navigation = () => {
               <img src={image} style={{ width: '40px', height: '100%' }} />
             </NavLink>
           </li>
-          <li className="nav-link">
+          <li className="nav-link ">
             <NavLink
               to="/tutorials"
-              className="nav-link"
+              className="nav-link text-light"
               onClick={() => {
                 dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
                 dispatch({ type: '@temp/SUCCESS_REQUIRED', payload: null });
@@ -79,7 +82,7 @@ export const Navigation = () => {
           <li className="nav-link">
             <NavLink
               to="/engineerings"
-              className="nav-link"
+              className="nav-link text-light"
               onClick={() => {
                 dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
                 dispatch({ type: '@temp/SUCCESS_REQUIRED', payload: null });
@@ -91,7 +94,7 @@ export const Navigation = () => {
           <li className="nav-link">
             <NavLink
               to="/insights"
-              className="nav-link"
+              className="nav-link text-light" 
               onClick={() => {
                 dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
                 dispatch({ type: '@temp/SUCCESS_REQUIRED', payload: null });
@@ -107,7 +110,7 @@ export const Navigation = () => {
               <li className="nav-link">
                 <NavLink
                   to="/write-your-story"
-                  className="nav-link"
+                  className="nav-link text-light"
                   onClick={() => {
                     dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
                     dispatch({ type: '@temp/SUCCESS_REQUIRED', payload: null });
@@ -117,9 +120,13 @@ export const Navigation = () => {
                         </NavLink>
               </li>
               <li className="nav-link float-right">
-                <NavDropdown alignRight title={<FaUserAlt />} id="basic-nav-dropdown">
+                <Dropdown alignRight className="text-light"  title="Hello" id="basic-nav-dropdown ">
+                  <DropdownToggle variant="secondary">
+                    <FaUserAlt className="text-light"/>
+                  </DropdownToggle>
+                  <DropdownMenu className="bg-secondary border-light rounded-bottom rounded-left ">
                   <NavLink
-                    className="dropdown-item"
+                    className="dropdown-item text-light"
                     to="/profile"
                     type="button"
                     onClick={() => {
@@ -129,9 +136,10 @@ export const Navigation = () => {
                   >
                     Profile
                 </NavLink>
-                  <NavDropdown.Item type="button" to={location.pathname} onClick={handleOpen}>
-                    Logout
-                </NavDropdown.Item>
+                    <DropdownItem to={location.pathname} onClick={handleOpen} className="text-light">
+                      Logout
+                    </DropdownItem>
+                </DropdownMenu>
                   <Popup show={show} onHide={handleClose}>
                     Sistemden Çıkıyorsunuz Emin misiniz?
                   <PopupButton variant="secondary" onClick={handleClose}>
@@ -141,7 +149,7 @@ export const Navigation = () => {
                       EVET
                   </PopupButton>
                   </Popup>
-                </NavDropdown>
+                </Dropdown>
               </li>
             </Nav>
           ) : (
@@ -149,7 +157,7 @@ export const Navigation = () => {
                 <li className="nav-link">
                   <NavLink
                     to="/login"
-                    className="nav-link"
+                    className="nav-link text-light"
                     onClick={
                       () => {
                         dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
@@ -159,9 +167,9 @@ export const Navigation = () => {
                     Write your story
                         </NavLink>
                 </li>
-                <NavDropdown className="nav-link uk-align-right" title="Account" id="basic-nav-dropdown">
+                <Dropdown className="nav-link uk-align-right" title="Account" id="basic-nav-dropdown">
                   <NavLink
-                    className="dropdown-item"
+                    className="dropdown-item text-light"
                     to="/register"
                     onClick={() => {
                       dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
@@ -171,7 +179,7 @@ export const Navigation = () => {
                     Sign Up
                 </NavLink>
                   <NavLink
-                    className="dropdown-item"
+                    className="dropdown-item text-light"
                     to="/login"
                     onClick={() => {
                       dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
@@ -180,7 +188,7 @@ export const Navigation = () => {
                   >
                     Sign In
                 </NavLink>
-                </NavDropdown>
+                </Dropdown>
               </Nav>
             )
         }
