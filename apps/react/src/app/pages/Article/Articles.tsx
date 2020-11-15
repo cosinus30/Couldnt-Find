@@ -22,7 +22,7 @@ export const Articles = () => {
 
   useEffect(() => {
     api.article
-      .getArticles(articleType, query.get("page"), sortType)
+      .getArticles(articleType, query.get("page"), sortType, QueryParams.defaultSize)
       .then((response) => {
         console.log(response);
         setPage(response);
@@ -58,11 +58,6 @@ export const Articles = () => {
 
   return (
     <Container>
-      <Row >
-        <Col md={12}>
-          <h1 className="text-light">{articleType.charAt(0).toUpperCase() + articleType.slice(1)}</h1>
-        </Col>
-      </Row>
       <Row className="justify-content-center">
         {rendering}
       </Row>
