@@ -4,4 +4,5 @@ export * from './Image';
 export * from './Input';
 export * from './ErrorMessage';
 export * from './IconButton';
-export * from './Spinner'
+export * from './Spinner';
+export * from './Dropdown';
