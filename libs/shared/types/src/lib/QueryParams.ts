@@ -5,4 +5,6 @@ export const QueryParams = {
     likeSort: "sort=likeCount,desc",
     likeSortWeek: "sort=likeCount,desc&time=week",
     likeSortMonth: "sort=likeCount,desc&time=month",
+    mainPageSize:"size=3",
+    defaultSize:"size=12",
 }
