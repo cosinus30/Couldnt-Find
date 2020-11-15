@@ -10,6 +10,7 @@ import styled from 'styled-components';
 type CardProps = {
   page: PageResponse;
   articleType: string;
+  articleTypeUrl?: string;
 };
 
 
@@ -31,8 +32,30 @@ export const Cards: React.FC<CardProps> = ({ children, ...props }) => {
     });
   }
 
+  if(props.page.content.length == 0){
+    return (
+      <Row >
+        <Col md={12}>
+          <h1 className="text-light">{props.articleType.charAt(0).toUpperCase() + props.articleType.slice(1)}</h1>
+        </Col>
+        <Col md={12} className="justify-content-center">
+          <h2 className="text-light">Uuuups! No content here!</h2>
+        </Col>
+    </Row>
+    )
+  }
+
   return (
-    props.page.content?.map((article) => (
+    <React.Fragment>
+    <Row >
+      <Col md={12}>
+        <a href={props.articleTypeUrl}>
+          <h1 className="text-light">{props.articleType.charAt(0).toUpperCase() + props.articleType.slice(1)}</h1>
+        </a>
+      </Col>
+    </Row>
+    <Row>
+    {    props.page.content?.map((article) => (
       <Col key={article.id} md="6" xs="12" lg="4">
         <StyledRBCard className="m-3 bg-mine text-white" onClick={() => goToLinkHandler(article.id)}>
           <RBCard.Img style={{maxHeight: "25vh", objectFit: "cover" , aspectRatio: "3/2"}} variant="top" src={code} />
@@ -69,6 +92,9 @@ export const Cards: React.FC<CardProps> = ({ children, ...props }) => {
             </Row>
         </StyledRBCard>
       </Col>
-    ))
+    ))}
+
+    </Row>
+    </React.Fragment>
   );
 };
