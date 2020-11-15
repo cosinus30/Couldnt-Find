@@ -11,13 +11,13 @@ export class ArticleResource {
 
     createArticle = (data: CreateArticleRequest): Promise<any> => this.axios.post("articles/", data, this.axiosRequestConfig).then((r) => r.data);
 
-    getArticles = (articleType: string, pageNo?: string, sortType?: string): Promise<PageResponse> => {
+    getArticles = (articleType: string, pageNo?: string, sortType?: string, size?: string): Promise<PageResponse> => {
         if(isNullOrUndefined(pageNo))
             pageNo="0";
         else{
             pageNo =  (Number.parseInt(pageNo) - 1).toString();
         }
-        return this.axios.get('articles/'+ articleType + "?page=" + pageNo +"&" + sortType, this.axiosRequestConfig)
+        return this.axios.get('articles/'+ articleType + "?page=" + pageNo +"&" + sortType + "&" + size, this.axiosRequestConfig)
         .then((response) => { return response.data })
 
     };
