@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "nx": "nx",
-    "start": "nx serve react --host https://dev-diary-frontend.herokuapp.com/",
+    "start": "nx serve react --host 0.0.0.0",
     "storybook": "nx run ui:storybook",
     "build": "nx build",
     "test": "nx test",
