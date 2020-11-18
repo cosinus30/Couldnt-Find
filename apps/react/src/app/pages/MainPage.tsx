@@ -16,7 +16,7 @@ export const MainPage = () => {
 
 
   useEffect(() => {
-    api.article.getArticles("tutorials", "0", QueryParams.defaultSort, QueryParams.mainPageSize)
+    api.article.getArticles("tutorials", "0", QueryParams["Most recent"], QueryParams.mainPageSize, QueryParams.Infinity)
     .then((response) =>{
         setTutorials(response);
         setTutorialsLoading(false);
@@ -25,7 +25,7 @@ export const MainPage = () => {
       console.log("Uuups");
     })
 
-    api.article.getArticles("insights", "0", QueryParams.defaultSort, QueryParams.mainPageSize)
+    api.article.getArticles("insights", "0", QueryParams["Most recent"], QueryParams.mainPageSize, QueryParams.Infinity)
     .then((response) =>{
         setInsights(response);
         setInsightsLoading(false);
@@ -34,7 +34,7 @@ export const MainPage = () => {
       console.log("Uuups");
     })
 
-    api.article.getArticles("engineerings", "0", QueryParams.defaultSort, QueryParams.mainPageSize)
+    api.article.getArticles("engineerings", "0", QueryParams["Most recent"], QueryParams.mainPageSize, QueryParams.Infinity)
     .then((response) =>{
         setEngineerings(response);
         setEngineeringsLoading(false);
