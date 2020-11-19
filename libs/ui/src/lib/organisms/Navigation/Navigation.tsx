@@ -69,7 +69,7 @@ export const Navigation = () => {
           </li>
           <li className="nav-link ">
             <NavLink
-              to="/tutorials"
+              to="/tutorials?page=1&sort=releaseDate,desc&time=3days"
               className="nav-link text-light"
               onClick={() => {
                 dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
@@ -81,7 +81,7 @@ export const Navigation = () => {
           </li>
           <li className="nav-link">
             <NavLink
-              to="/engineerings"
+              to="/engineerings?page=1&sort=releaseDate,desc&time=3days"
               className="nav-link text-light"
               onClick={() => {
                 dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
@@ -93,7 +93,7 @@ export const Navigation = () => {
           </li>
           <li className="nav-link">
             <NavLink
-              to="/insights"
+              to="/insights?page=1&sort=releaseDate,desc&time=3days"
               className="nav-link text-light" 
               onClick={() => {
                 dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
