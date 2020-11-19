@@ -20,7 +20,7 @@ const StyledRBCard= styled(RBCard)
   filter: drop-shadow(4px 4px 6px rgba(123, 123, 123, 0.15));
   cursor: pointer;
 `
- 
+
 
 export const Cards: React.FC<CardProps> = ({ children, ...props }) => {
   const history = useHistory();
@@ -57,13 +57,13 @@ export const Cards: React.FC<CardProps> = ({ children, ...props }) => {
     <Row>
     {    props.page.content?.map((article) => (
       <Col key={article.id} md="6" xs="12" lg="4">
-        <StyledRBCard className="m-3 bg-mine text-white" onClick={() => goToLinkHandler(article.id)}>
+        <StyledRBCard className="m-3 bg-mine text-light"  onClick={() => goToLinkHandler(article.id)}>
           <RBCard.Img style={{maxHeight: "25vh", objectFit: "cover" , aspectRatio: "3/2"}} variant="top" src={code} />
           <RBCard.Body>
             <RBCard.Title>{article.heading}</RBCard.Title>
-            <RBCard.Text>
-              {article.content.substr(0, 150)}...
-          </RBCard.Text>
+            <div style={{height:150, overflowY: 'hidden',width:'300px' , color: '#E9D7DA !important'}} >
+              <div style={{color: '#E9D7DA !important'}} dangerouslySetInnerHTML={{__html : article.content}}></div>
+            </div>
           </RBCard.Body>
           <hr className="bg-primary my-1"/>
             <Row className="mx-1 my-1">
