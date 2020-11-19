@@ -1,6 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, Col, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import { IconButton } from '../../atoms';
 import { faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faBookmark, faHeart } from '@fortawesome/free-regular-svg-icons';
@@ -19,16 +19,16 @@ export interface IconButtonRowProps {
 export const IconButtonRow: React.FC<IconButtonRowProps> = ({ children, ...props }) => {
     return (
         <Row>
-            <Col md={{ span: 4, offset: 8 }}>
-                <IconButton><FontAwesomeIcon icon={faFacebook} onClick={props.facebookHandler} /></IconButton>
-                <IconButton><FontAwesomeIcon icon={faTwitter} onClick={props.twitterHandler} /></IconButton>
+            <Col>
+                <IconButton><FontAwesomeIcon className="text-light" icon={faFacebook} onClick={props.facebookHandler} /></IconButton>
+                <IconButton><FontAwesomeIcon className="text-light" icon={faTwitter} onClick={props.twitterHandler} /></IconButton>
                 {props.bookmarked
-                    ? <IconButton><FontAwesomeIcon icon={faBookmarked} onClick={props.bookmarkHandler} /></IconButton>
-                    : <IconButton><FontAwesomeIcon icon={faBookmark} onClick={props.bookmarkHandler} /></IconButton>
+                    ? <IconButton><FontAwesomeIcon className="text-light" icon={faBookmarked} onClick={props.bookmarkHandler} /></IconButton>
+                    : <IconButton><FontAwesomeIcon className="text-light" icon={faBookmark} onClick={props.bookmarkHandler} /></IconButton>
                 }
                 {props.liked
-                    ? <IconButton onClick={props.likeHandler}><FontAwesomeIcon icon={faLiked}  /></IconButton>
-                    : <IconButton onClick={props.likeHandler} ><FontAwesomeIcon icon={faHeart}/></IconButton>
+                    ? <IconButton onClick={props.likeHandler}><FontAwesomeIcon className="text-light" icon={faLiked}  /></IconButton>
+                    : <IconButton onClick={props.likeHandler} ><FontAwesomeIcon className="text-light" icon={faHeart}/></IconButton>
                 }
             </Col>
         </Row>
