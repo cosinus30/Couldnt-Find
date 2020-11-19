@@ -4,6 +4,7 @@ import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap';
 import {
   CreateArticleRequest
 } from '@internship/shared/types';
+import QuillEditor from './QuillEditor';
 
 export const WriteYourStory = () => {
   const [content, setContent] = useState(String);
@@ -12,23 +13,29 @@ export const WriteYourStory = () => {
   const [wordCounter, setWordCounter] = useState(Number);
   const [success, setSuccess] = useState(Boolean);
   const [isUploaded, setIsUploaded] = useState(false);
+  const [files, setFiles] = useState([]);
 
   const handleHeadingChange = (event) => {
     setHeading(event.target.value);
   }
 
-  const handleContentChange = (event) => {
-    setContent(event.target.value);
+  const handleContentChange = (value) => {
+    setContent(value);
   }
 
   const handleContentTypeChange = (event) => {
     setContentType(event.target.value);
   }
 
+  const onFileChange = (files) => {
+    setFiles(files);
+  }
+
 
   //TODO handleSave ve handlePublish metodlarini tekte birlestirebilirsin.
   //TODO wordCounter eklemeyi unutma
   const handleSave = (event) => {
+    event.preventDefault();
     setIsUploaded(true);
     const req: CreateArticleRequest = {
       content: content,
@@ -39,16 +46,16 @@ export const WriteYourStory = () => {
     }
     api.article.createArticle(req)
       .then((res) => {
-        setSuccess(true)
+        setSuccess(true);
+        setContent("");
       })
       .catch((err) => {
         setSuccess(false)
       })
-    event.preventDefault();
-    alert("hello")
   }
 
   const handlePublish = (event) => {
+    event.preventDefault();
     setIsUploaded(true);
     const req: CreateArticleRequest = {
       content: content,
@@ -59,12 +66,12 @@ export const WriteYourStory = () => {
     }
     api.article.createArticle(req)
       .then((res) => {
-        setSuccess(true)
+        setSuccess(true);
+        setContent("");
       })
       .catch((err) => {
         setSuccess(false)
       })
-    event.preventDefault();
   }
 
   let message = null
@@ -79,10 +86,16 @@ export const WriteYourStory = () => {
           {message}
           <Form>
             <Row>
+              <Col md="8">
+                <Form.Group controlId="exampleForm.ControlInput1">
+                  <Form.Label className="text-light">Title of the article</Form.Label>
+                  <Form.Control className="bg-secondary border-0 text-light" placeholder="A heading would be nice" value={heading} onChange={handleHeadingChange} />
+                </Form.Group>
+              </Col>
               <Col md="4">
                 <Form.Group controlId="exampleForm.ControlSelect1">
-                  <Form.Label>Example select</Form.Label>
-                  <Form.Control as="select" value={contentType} onChange={handleContentTypeChange}>
+                  <Form.Label className="text-light">Type of the article</Form.Label>
+                  <Form.Control className="bg-secondary border-0 text-light" as="select" value={contentType} onChange={handleContentTypeChange}>
                     <option value="Tutorial">Tutorial</option>
                     <option value="Insight">Insight</option>
                     <option value="Engineering">Software Engineering</option>
@@ -90,16 +103,18 @@ export const WriteYourStory = () => {
                 </Form.Group>
               </Col>
             </Row>
-            <Form.Group controlId="exampleForm.ControlInput1">
-              <Form.Control placeholder="A heading would be nice" value={heading} onChange={handleHeadingChange} />
-            </Form.Group>
-            <Form.Group controlId="exampleForm.ControlTextarea1">
-              <Form.Control value={content} onChange={handleContentChange} as="textarea" rows={40} placeholder="Why did not you start already?" />
-            </Form.Group>
-            <Row>
-              <Col md={{ span: 4, offset: 8 }}>
-                <Button variant="info" type="submit" name="save" value="Save Story" onClick={handleSave}>Save Story</Button>
-                <Button variant="success" type="submit" name="publish" value="Publish Story" onClick={handlePublish}>Publish Story</Button>
+            <Row className="justify-content-md-center">
+              <Col xs="12" md="9">
+                  <QuillEditor
+                    placeholder="Start posting something"
+                    onEditorChange={handleContentChange}
+                  />
+              </Col>
+            </Row>
+            <Row className="justify-content-md-center">
+              <Col xs="12" md={{offset:6, span:6}}>
+                  <Button variant="secondary" className="mx-2" type="submit" name="save" value="Save Story" onClick={handleSave}>Save Story</Button>
+                  <Button variant="secondary" className="mx-2" type="submit" name="save" value="Publish Story" onClick={handlePublish}>Publish Story</Button>
               </Col>
             </Row>
           </Form>
