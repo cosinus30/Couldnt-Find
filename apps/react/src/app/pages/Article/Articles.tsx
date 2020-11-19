@@ -12,41 +12,45 @@ export const Articles = () => {
   const {articleType} = useParams();
   const query = useQuery();
 
-  console.log(articleType);
-
   const [page, setPage] = useState<PageResponse>();  
   const [loading, setLoading] = useState(true);
 
-  // TODO Put these into global store
-  // ! Initial values are should be QueryParams["Most recent"] for sortType, QueryParams["3 days"] for span
-  const [sortType, setSortType] = useState(QueryParams["Most recent"]);
-  const [span, setSpan] = useState(QueryParams["3 days"]);
+  const [sortType, setSortType] = useState(query.get("sort"))
+  const [time, setTime] = useState(query.get("time"))
+  const [pageNo, setPageNo] = useState(query.get("page"))
 
   useEffect(() => {
     api.article
-      .getArticles(articleType, query.get("page"), sortType, QueryParams.defaultSize, span)
+      .getArticles(articleType, query.get("page"), query.get("sort"), QueryParams.defaultSize, query.get("time"))
       .then((response) => {
-        console.log(response);
         setPage(response);
         setLoading(false);
       })
       .catch((e) => console.error(e));
-  }, [sortType, span]);
+  }, [sortType,time]);
 
   const sortHandler = (event) => {
-    setSortType(QueryParams[event.target.value]);
+    history.push({
+      pathname: '/'+articleType,
+      search: '?page=' + pageNo + "&sort=" + QueryParams[event.target.value] + "&time=" +time
+    })
+    setSortType(QueryParams[event.target.value])
   }
 
   const spanHandler = (event) => {
-    setSpan(QueryParams[event.target.value])
+    history.push({
+      pathname: '/'+articleType,
+      search: '?page=' + pageNo + "&sort="+ sortType  + "&time=" + QueryParams[event.target.value]
+    })
+    setTime(QueryParams[event.target.value])
   }
 
   let items = [];
   let paginationBasic = null;
   const sortTypes = ["Most recent","Most liked","Most popular"];
-  const sortDropdown = (<Dropdown  options={sortTypes} onSelectHandler={sortHandler}/>);
+  const sortDropdown = (<Dropdown  options={sortTypes} selected={sortType} onSelectHandler={sortHandler}/>);
   const spanTypes = ["3 days", "Week", "Month", "Infinity"];
-  const spanDropdown = (<Dropdown options={spanTypes} onSelectHandler={spanHandler}/>)
+  const spanDropdown = (<Dropdown options={spanTypes} selected={time} onSelectHandler={spanHandler}/>)
   
   let rendering = <Spinner animation="border"></Spinner>
   if (!loading) {

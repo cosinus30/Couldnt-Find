@@ -17,7 +17,7 @@ export class ArticleResource {
         else{
             pageNo =  (Number.parseInt(pageNo) - 1).toString();
         }
-        return this.axios.get('articles/'+ articleType + "?page=" + pageNo + sortType + size + span, this.axiosRequestConfig)
+        return this.axios.get('articles/'+ articleType + "?page=" + pageNo +"&sort=" +sortType + size + "&time=" + span, this.axiosRequestConfig)
         .then((response) => { return response.data })
 
     };
