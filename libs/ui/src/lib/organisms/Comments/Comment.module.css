@@ -1,0 +1,9 @@
+.Card{
+    border-radius: 1rem;
+}
+
+.textMuted{
+    font-weight: 200;
+    color: #E9D7DA;
+    font-size: small;
+}
