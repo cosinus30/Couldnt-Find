@@ -7,10 +7,13 @@ import mySvg from '../../../../../../apps/react/src/assets/girl-1.svg';
 import { Months } from '@internship/shared/types';
 import { faBookmark, faEye, faHeart } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconButton } from '../../atoms';
+import { faCommentDots } from '@fortawesome/free-solid-svg-icons';
 
 type DetailCardProps = {
   articleDetail: ArticleResponse;
   userInteraction: IconButtonRowProps;
+  commentHandler: (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => void
 };
 
 export const DetailedCard: React.FC<DetailCardProps> = ({ children, ...props }) => {
@@ -27,21 +30,23 @@ export const DetailedCard: React.FC<DetailCardProps> = ({ children, ...props }) 
         <Card.Header >
           <Row>
             <Col xs="4">
-              <Row>
-                <Col xs="4" className="pr-1">
-                  <img src={mySvg} height="50px" width="50px" alt="React Logo" />
-                </Col>
-                <Col xs="8" className="pl-0">
-                  <Row>
-                    <Col xs="12">
-                      {props.articleDetail.article.author.username}
-                    </Col>
-                    <Col xs="12" >
-                      <small>{ day + " " + Months[month+1] + " " + year}</small>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
+              <a href="#">
+                <Row>
+                  <Col xs="4" className="pr-1">
+                    <img src={mySvg} height="50px" width="100%" alt="React Logo" />
+                  </Col>
+                  <Col xs="8" className="pl-1">
+                    <Row>
+                      <Col xs="12">
+                        {props.articleDetail.article.author.username}
+                      </Col>
+                      <Col xs="12" >
+                        <small>{ day + " " + Months[month+1] + " " + year}</small>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </a>
             </Col>
             <Col xs="8">
               <IconButtonRow {...props.userInteraction}></IconButtonRow>
@@ -55,19 +60,26 @@ export const DetailedCard: React.FC<DetailCardProps> = ({ children, ...props }) 
       </Card.Body>
       <Card.Footer>
         <Row>
-          <Col xs={2}>
-            <small className="float-left">
-              <FontAwesomeIcon icon={faHeart}/><span className="text-muted"> 3 likes</span> 
+          <Col xs={2} className="my-auto">
+            <small className="float-left my-auto">
+              <FontAwesomeIcon icon={faHeart}/><span className="text-muted"> {props.articleDetail.article.likeCount} likes</span> 
             </small>
           </Col>
-          <Col xs={2}>
-            <small className="float-left">
-              <FontAwesomeIcon icon={faEye}/><span className="text-muted"> 4 views</span> 
+          <Col xs={2} className="my-auto">
+            <small className="float-left ">
+              <FontAwesomeIcon icon={faEye}/><span className="text-muted"> {props.articleDetail.article.viewCount} views</span> 
             </small>
           </Col>
-          <Col xs={2}>
+          <Col xs={2} className="my-auto">
             <small className="float-left">
-              <FontAwesomeIcon icon={faBookmark}/><span className="text-muted"> 5 bookmarks</span> 
+  <FontAwesomeIcon icon={faBookmark}/><span className="text-muted"> {props.articleDetail.article.bookmarkCount} bookmarks</span> 
+            </small>
+          </Col>
+          <Col>
+            <small className="float-right">
+              <IconButton onClick={props.commentHandler} className="text-light"><FontAwesomeIcon icon={faCommentDots}/>
+  <span> <small>{props.articleDetail.article.commentCount}Comments</small></span>
+              </IconButton>
             </small>
           </Col>
         </Row>
@@ -75,3 +87,4 @@ export const DetailedCard: React.FC<DetailCardProps> = ({ children, ...props }) 
     </Card>
   );
 };
+ 
