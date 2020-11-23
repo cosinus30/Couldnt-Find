@@ -3,6 +3,23 @@ export interface ArticleResponse {
     liked: boolean;
     bookmarked: boolean;
 }
+export interface PageResponse{
+    content: ArticlesResponse[];
+    totalPages: number;
+    last: boolean;
+    totalElements: number;
+    first:boolean;
+    empty:boolean;
+    number: number;
+}
+
+export interface CommentResponse{
+    id: number;
+    user: User;
+    article: Article;
+    content: string;
+    commentDate: Date;
+}
 interface User {
     email: string;
     id: number;
@@ -10,7 +27,6 @@ interface User {
     lastname: string;
     username: string
 }
-
 interface Article {
     content: string;
     published: boolean;
@@ -20,6 +36,10 @@ interface Article {
     id: number;
     heading: string;
     author: User;
+    bookmarkCount: number;
+    likeCount: number;
+    viewCount: number;
+    commentCount: number;
 }
 
 interface ArticlesResponse {
@@ -34,14 +54,4 @@ interface ArticlesResponse {
     likeCount: number;
     bookmarkCount: number;
     viewCount: number;
-}
-
-export interface PageResponse{
-    content: ArticlesResponse[];
-    totalPages: number;
-    last: boolean;
-    totalElements: number;
-    first:boolean;
-    empty:boolean;
-    number: number;
 }

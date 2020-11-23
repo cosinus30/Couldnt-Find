@@ -5,6 +5,7 @@ import {
 
 import { ArticleResponse, PageResponse } from './index'
 import { isNullOrUndefined } from 'util';
+import { CommentResponse } from './types';
 
 export class ArticleResource {
     constructor(private axios: AxiosInstance = axiosStatic, private axiosRequestConfig: AxiosRequestConfig = {}) { }
@@ -32,5 +33,13 @@ export class ArticleResource {
     unbookmark = (id: number): Promise<any> => this.axios.post("articles/" + id + "/unbookmark", this.axiosRequestConfig).then((response) => { return response });
     bookmark = (id: number): Promise<any> => this.axios.post("articles/" + id + "/bookmark", this.axiosRequestConfig).then((response) => { return response });
 
+    getComments = (articleType:string, articleId: number) : Promise<CommentResponse[]> => this.axios.get("articles/" + articleType + "/" + articleId + "/comment", this.axiosRequestConfig).then((response) => { return response.data });
+    
+    makeComment = (articleType:string, articleId: number, content:string) : 
+        Promise<any> => this.axios.post("articles/" + articleType + "/" + articleId + "/comment", {content}, this.axiosRequestConfig).then((response) => { return response.data });;
+
+    updateComment = (articleType:string, articleId: number, content:string) : Promise<any> => this.axios.put("articles/" + articleType + "/" + articleId + "/comment", {content}, this.axiosRequestConfig);
+
+    deleteComment = (articleType:string, articleId: number) : Promise<any> => this.axios.delete("articles/" + articleType + "/" + articleId + "/comment", this.axiosRequestConfig);
 
 }
