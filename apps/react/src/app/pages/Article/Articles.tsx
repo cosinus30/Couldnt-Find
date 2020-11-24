@@ -23,6 +23,7 @@ export const Articles = () => {
     api.article
       .getArticles(articleType, query.get("page"), query.get("sort"), QueryParams.defaultSize, query.get("time"))
       .then((response) => {
+        console.log(response);
         setPage(response);
         setLoading(false);
       })
@@ -56,12 +57,13 @@ export const Articles = () => {
   if (!loading) {
     for (let number = 1; number <= page.totalPages; number++) {
       items.push(
-        <Pagination.Item key={number} active={number === page.number+1} href={`/${articleType}?page=${number}`}>
+        <Pagination.Item key={number} active={number === page.number+1} href={`/${articleType}?page=${number}&sort=${sortType}&time=${time}`}>
           {number}
         </Pagination.Item>,
       );
     }
 
+    console.log(page)
     rendering = (<Cards page={page} articleType={articleType}/>);
     paginationBasic = (
         <div>
