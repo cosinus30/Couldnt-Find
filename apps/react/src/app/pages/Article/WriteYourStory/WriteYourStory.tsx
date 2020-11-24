@@ -1,19 +1,32 @@
 import { api } from '@internship/shared/api';
-import React, { useState } from 'react';
+import { Tag } from '@internship/shared/api';
+import React, { useEffect, useState } from 'react';
 import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap';
-import {
-  CreateArticleRequest
-} from '@internship/shared/types';
+import {CreateArticleRequest} from '@internship/shared/types';
 import QuillEditor from './QuillEditor';
+import CreatableSelect from 'react-select/creatable';
 
 export const WriteYourStory = () => {
   const [content, setContent] = useState(String);
   const [heading, setHeading] = useState(String);
   const [contentType, setContentType] = useState("Tutorial");
-  const [wordCounter, setWordCounter] = useState(Number);
+  const [tags, setTags] = useState([]);
+  const [tagsDisabled, setTagsDisabled] = useState(false);
   const [success, setSuccess] = useState(Boolean);
   const [isUploaded, setIsUploaded] = useState(false);
-  const [files, setFiles] = useState([]);
+  const [suggestions, setSuggestions] = useState<Tag[]>();
+
+  useEffect(() => {
+    api.article.getSuggestions()
+    .then((response) => {
+      let myArr = [];
+      response.map((tag) => {
+        myArr.push({label: tag.tagName, value: tag.tagName});
+      })
+      setSuggestions(myArr);
+    })
+  },[false])
+
 
   const handleHeadingChange = (event) => {
     setHeading(event.target.value);
@@ -27,17 +40,12 @@ export const WriteYourStory = () => {
     setContentType(event.target.value);
   }
 
-  const onFileChange = (files) => {
-    setFiles(files);
-  }
 
-
-  //TODO handleSave ve handlePublish metodlarini tekte birlestirebilirsin.
-  //TODO wordCounter eklemeyi unutma
   const handleSave = (event) => {
     event.preventDefault();
     setIsUploaded(true);
     const req: CreateArticleRequest = {
+      tags: tags,
       content: content,
       contentType: contentType,
       published: false,
@@ -57,7 +65,9 @@ export const WriteYourStory = () => {
   const handlePublish = (event) => {
     event.preventDefault();
     setIsUploaded(true);
+    console.log(tags);
     const req: CreateArticleRequest = {
+      tags: tags,
       content: content,
       contentType: contentType,
       published: true,
@@ -79,10 +89,84 @@ export const WriteYourStory = () => {
     message = success === false ? <Alert variant="danger">Something went wrong!</Alert> : <Alert variant="success">Uploaded successfully</Alert>
   }
 
+  if(tagsDisabled){
+    message = <Alert variant="warning">You can add up to 5 tags.</Alert>
+  }
+
+  const handleChange = (newValue: any, actionMeta: any) => {
+    if(newValue && newValue.length > 5){
+      setTagsDisabled(true);
+    }
+    else if(newValue && newValue.length <= 5){
+      let temp = []
+      newValue.map((el) => {
+        temp.push(el.value);
+      })
+      setTags([...temp]);
+      setTagsDisabled(false);
+    }
+    // console.group('Value Changed');
+    // console.log(newValue);
+    // console.log(`action: ${actionMeta.action}`);
+    // console.groupEnd();
+  };
+
+  //TODO All suggestions will come from backend.
+
+  const CustomStyle = {
+    control: styles => ({ ...styles, backgroundColor: '#151618' }),
+    option: (styles) => {
+      return {
+        ...styles,
+        backgroundColor: '#151618',
+        color: '#E9D7DA',
+        ':hover': {
+          ...styles[':active'],
+          backgroundColor: '#E9D7DA',
+          color: '#151618'
+        },
+      };
+    },
+    multiValue: (styles) => {
+      return {
+        ...styles,
+        backgroundColor: '#E9D7DA',
+      };
+    },
+    multiValueLabel: (styles) => ({
+      ...styles,
+      color: '#151618',
+    }),
+    multiValueRemove: (styles) => ({
+      ...styles,
+      color: '#151618',
+      ':hover': {
+        backgroundColor: '#E9D7DA',
+        color: 'red',
+      },
+    }),
+  };
+
+  const selectComp = (  
+    <React.Fragment>
+      <p className="text-light">{tagsDisabled ? "You can add up to 5 tags" : "Select tag"}</p>
+      <CreatableSelect
+        defaultValue={[]}
+        isMulti
+        name="Tags"
+        options={suggestions}
+        className="basic-multi-select bg-secondary"
+        classNamePrefix="You can add up to 5 tags"
+        styles={CustomStyle}
+        onChange={handleChange}
+      />
+    </React.Fragment>)
+
   return (
     <Container>
       <Row>
         <Col md="12">
+          {selectComp}
           {message}
           <Form>
             <Row>
@@ -123,3 +207,5 @@ export const WriteYourStory = () => {
     </Container>
   );
 };
+
+
