@@ -54,4 +54,10 @@ interface ArticlesResponse {
     likeCount: number;
     bookmarkCount: number;
     viewCount: number;
+    tags: Tag[];
+}
+
+
+export interface Tag{
+    tagName: string;
 }

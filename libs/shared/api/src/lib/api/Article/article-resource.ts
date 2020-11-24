@@ -3,7 +3,7 @@ import {
     CreateArticleRequest
 } from '@internship/shared/types';
 
-import { ArticleResponse, PageResponse } from './index'
+import { ArticleResponse, PageResponse, Tag } from './index'
 import { isNullOrUndefined } from 'util';
 import { CommentResponse } from './types';
 
@@ -26,6 +26,9 @@ export class ArticleResource {
     getArticleById = (articleType: string, id: number) : Promise<ArticleResponse> => 
         this.axios.get("articles/"+ articleType + "/" + id, this.axiosRequestConfig)
         .then((response) => { return response.data });
+
+    getSuggestions = (): Promise<Tag[]> => this.axios.get("articles/tags", this.axiosRequestConfig)
+        .then((response) => {return response.data});
 
     unlike = (id: number): Promise<any> => this.axios.post("articles/" + id + "/unlike", this.axiosRequestConfig).then((response) => { return response });
     like = (id: number): Promise<any> => this.axios.post("articles/" + id + "/like", this.axiosRequestConfig).then((response) => { return response });

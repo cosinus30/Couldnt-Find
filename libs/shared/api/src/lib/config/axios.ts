@@ -9,8 +9,7 @@ import {
   successInterceptor,
 } from './interceptors';
 
-
-const baseUrl = 'https://dev-diary.herokuapp.com/';
+const baseUrl = 'http://localhost:8080';
 
 const defaultConfig: AxiosRequestConfig = {
   baseURL: `${baseUrl}/api/`,
