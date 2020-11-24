@@ -1,0 +1,28 @@
+.CardBody {
+    cursor: default;
+}
+
+.fancy_card {
+    transform: scale(1);  
+}
+.fancy_card:hover {
+    box-shadow: 0px 0px 0px #000000;
+    z-index: 2;
+}
+.tag{
+    background-color: #151618;
+    border: none;
+    color: #E9D7DA;
+    padding: 4px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 2px 2px;
+    cursor: pointer;
+    border-radius: 32px;
+}
+
+.tag:hover {
+    background-color: #9affe1;
+    color: #151618;
+}
