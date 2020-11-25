@@ -6,14 +6,16 @@ import React from 'react';
 import { Card as RBCard, Col, Row } from 'react-bootstrap';
 import {useHistory} from 'react-router-dom';
 import styled from 'styled-components';
+import { isNullOrUndefined } from 'util';
 import mySvg from '../../../../../../apps/react/src/assets/girl-1.svg';
 import classes from './Cards.module.css';
 
 
 type CardProps = {
   page: PageResponse;
-  articleType: string;
+  articleType?: string;
   articleTypeUrl?: string;
+  isMyStories?: boolean;
 };
 
 
@@ -28,19 +30,17 @@ const StyledRBCard= styled(RBCard)
 export const Cards: React.FC<CardProps> = ({ children, ...props }) => {
   const history = useHistory();
 
-  const goToLinkHandler = (id) => {
+  const goToLinkHandler = (id, articleType) => {
     console.log(id);
+    console.log(articleType);
     history.push({
-      pathname: props.articleType +'/' + id,
+      pathname: "/" + articleType +'/' + id,
     });
   }
 
   if(props.page.content.length == 0){
     return (
       <Row >
-        <Col md={12}>
-          <h1 className="text-light">{props.articleType.charAt(0).toUpperCase() + props.articleType.slice(1)}</h1>
-        </Col>
         <Col md={12} className="justify-content-center">
           <h2 className="text-light">Uuuups! No content here!</h2>
         </Col>
@@ -50,13 +50,6 @@ export const Cards: React.FC<CardProps> = ({ children, ...props }) => {
 
   return (
     <React.Fragment>
-    <Row >
-      <Col md={12}>
-        <a href={props.articleTypeUrl}>
-          <h1 className="text-light">{props.articleType.charAt(0).toUpperCase() + props.articleType.slice(1)}</h1>
-        </a>
-      </Col>
-    </Row>
     <Row>
     {    props.page.content?.map((article) => {
         const relDate = new Date(article.releaseDate); 
@@ -88,7 +81,7 @@ export const Cards: React.FC<CardProps> = ({ children, ...props }) => {
               </Col>
             </Row>
           </RBCard.Header>
-          <RBCard.Img onClick={() => goToLinkHandler(article.id)} 
+          <RBCard.Img onClick={() => goToLinkHandler(article.id, article.contentType.toLowerCase() + "s")} 
           style={{maxHeight: "17.5vh", objectFit: "cover" , aspectRatio: "3/2"}} 
           variant="top" 
           src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80' />
@@ -99,9 +92,9 @@ export const Cards: React.FC<CardProps> = ({ children, ...props }) => {
             })}
             </div>
             
-            <RBCard.Title>{article.heading}</RBCard.Title>
-            <div style={{height:100, overflowY: 'hidden',maxWidth:'350px' , color: '#E9D7DA !important'}} >
-              <div style={{color: '#E9D7DA !important'}} dangerouslySetInnerHTML={{__html : article.content}}></div>
+            <h3>{article.heading}</h3>
+            <div style={{height:100, overflowY: 'hidden',maxWidth:'350px' , color: '#E9D7DA !important'}}>
+              <div  dangerouslySetInnerHTML={{__html : article.content}}></div>
             </div>
           </RBCard.Body>
           <hr className="bg-primary my-1"/>

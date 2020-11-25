@@ -11,10 +11,8 @@ export const Articles = () => {
   const history = useHistory();
   const {articleType} = useParams();
   const query = useQuery();
-
   const [page, setPage] = useState<PageResponse>();  
   const [loading, setLoading] = useState(true);
-
   const [sortType, setSortType] = useState(query.get("sort"))
   const [time, setTime] = useState(query.get("time"))
   const [pageNo, setPageNo] = useState(query.get("page"))
@@ -75,7 +73,12 @@ export const Articles = () => {
   return (
     <Container>
       <Row>
-        <Col xs={12} md={{offset:9, span:3}}>
+        <Col xs={12} md={9} className="my-auto">
+          <a href={"/articles/" + articleType}>
+            <h1 className="text-light">{articleType.charAt(0).toUpperCase() + articleType.slice(1)}</h1>
+          </a>
+        </Col>
+        <Col xs={12} md={3}>
           {sortDropdown}
           {spanDropdown}
         </Col>
