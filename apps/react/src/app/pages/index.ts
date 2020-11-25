@@ -6,3 +6,4 @@ export * from './Register';
 export * from './MailActivation';
 export * from './ForgotPassword';
 export * from './Article';
+export * from './User';

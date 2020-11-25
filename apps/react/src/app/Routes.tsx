@@ -12,6 +12,7 @@ import {
   ResetPassword,
   WriteYourStory,
   ArticleDetail,
+  MyStories,
 } from './pages';
 
 export const Routes = ({ children, ...props }) => {
@@ -27,6 +28,7 @@ export const Routes = ({ children, ...props }) => {
         <Route path="/auth" component={OAuth2RedirectHandler} />
         <Route exact path="/mailsuccess" component={MailSuccessPage} />
         <Route exact path="/mailerror" component={MailErrorPage} />
+        <Route exact path="/user/articles" component={MyStories} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/:articleType/:articleId" 

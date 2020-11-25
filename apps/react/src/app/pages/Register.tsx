@@ -62,7 +62,7 @@ export const Register = () => {
 
   return (
     <StyledApp>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className="text-light" onSubmit={handleSubmit(onSubmit)}>
         <H4 className="text text-center">Enter your information to create an account.</H4>
         <Container>
           <StyledRow>
@@ -114,7 +114,7 @@ export const Register = () => {
           </StyledRow>
           <div className="mr-auto">{isErrorRequired ? <Alert variant="danger">{isErrorRequired}</Alert> : null}</div>
           <div className="mb-3 mt-3">
-            <Button variant="outline-primary" type="submit">
+            <Button variant="secondary" type="submit">
               Register
             </Button>
           </div>
