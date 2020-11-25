@@ -6,3 +6,4 @@ export * from './ErrorMessage';
 export * from './IconButton';
 export * from './Spinner';
 export * from './Dropdown';
+export * from './Welcome'

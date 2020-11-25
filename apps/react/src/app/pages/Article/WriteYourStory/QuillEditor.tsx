@@ -18,6 +18,7 @@ class QuillEditor extends React.Component<MyProps, MyState> {
     _isMounted;
     pollHandler: any;
     reactQuillRef: any;
+    quill: any;
 
 
     constructor(props) {
@@ -160,7 +161,7 @@ class QuillEditor extends React.Component<MyProps, MyState> {
       "bullet",
       "indent",
       "link",
-      "image",
+      "video",
       "color",
       "code-block"
     ];
