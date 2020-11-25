@@ -17,7 +17,7 @@ type CardProps = {
   articleType?: string;
   articleTypeUrl?: string;
   isMyStories?: boolean;
-  deleteHandler?: (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => void
+  deleteHandler?: (event: React.MouseEvent<SVGSVGElement, MouseEvent>, articleId: number) => void
 };
 
 
@@ -81,18 +81,18 @@ export const Cards: React.FC<CardProps> = ({ children, ...props }) => {
                 </Col>
               </Row>) : (      
               <Row>
-                <Col xs="6">
+                <Col xs="6" className="mx-auto">
                   <IconButton className="text-brand-new bg-secondary"><FontAwesomeIcon className="text-brand-new" icon={faEdit}/> 
-                  <Link to={{ 
+                  <Link className="text-brand-new mx-1" to={{ 
                   pathname: "/write-your-story/"+article.id, 
                   state: article
                   }}>
-                  Register
+                  Edit
                   </Link>
                 </IconButton>
                 </Col>
-                <Col xs="6">
-                  <IconButton className="text-brand-new bg-secondary" onClick={props.deleteHandler} ><FontAwesomeIcon className="text-brand-new" icon={faTrashAlt} /> Remove</IconButton>
+                <Col xs="6" className="mx-auto">
+                  <IconButton className="text-brand-new bg-secondary" onClick={(event) => props.deleteHandler(event, article.id)} ><FontAwesomeIcon className="text-brand-new" icon={faTrashAlt} /> Remove</IconButton>
                 </Col>
             </Row>
     )}
