@@ -12,6 +12,10 @@ export class ArticleResource {
 
     createArticle = (data: CreateArticleRequest): Promise<any> => this.axios.post("articles/", data, this.axiosRequestConfig).then((r) => r.data);
 
+    updateArticle = (data: CreateArticleRequest, articleId: number): Promise<any> => this.axios.put("articles/?articleId=" + articleId , data, this.axiosRequestConfig).then((r) => r.data);
+
+    removeArticle = (articleId: number): Promise<any> => this.axios.delete("articles/?articleId=" + articleId, this.axiosRequestConfig).then((r) => r.data);
+
     getArticles = (articleType: string, pageNo?: string, sortType?: string, size?: string, span?: string ): Promise<PageResponse> => {
         if(isNullOrUndefined(pageNo))
             pageNo="0";

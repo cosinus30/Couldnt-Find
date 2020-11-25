@@ -42,8 +42,14 @@ export const MyStories = () => {
     }
 
     //TODO delete that goddamn article.
-    const deleteHandler = (event) => {
-      console.log("Delete handler called.");
+    const deleteHandler = (event, articleId: number) => {
+      api.article.removeArticle(articleId)
+        .then((res) => {
+          console.log("Removal successful")
+        })
+        .catch((err) => {
+          console.error("Could not be removed")
+        })
     }
 
     let items = [];
