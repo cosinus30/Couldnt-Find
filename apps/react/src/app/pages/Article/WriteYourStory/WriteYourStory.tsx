@@ -5,6 +5,7 @@ import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap';
 import {CreateArticleRequest} from '@internship/shared/types';
 import QuillEditor from './QuillEditor';
 import CreatableSelect from 'react-select/creatable';
+import { isNullOrUndefined } from 'util';
 
 
 //TODO if article is prepopulated api call will be different.
@@ -20,7 +21,9 @@ export const WriteYourStory = (props) => {
   const [prePopulated, setPrePopulated] = useState(false);
   
   useEffect(() => {
-    setPrePopulated(props.location.state == null);
+    console.log(props.location.state);
+    
+    setPrePopulated(!isNullOrUndefined(props.location.state));
     api.article.getSuggestions()
     .then((response) => {
       let myArr = [];
@@ -45,7 +48,7 @@ export const WriteYourStory = (props) => {
   }
 
 
-  const handleSave = (event) => {
+  const handleSave = (event, prePopulate: boolean) => {
     event.preventDefault();
     setIsUploaded(true);
     const req: CreateArticleRequest = {
@@ -56,7 +59,19 @@ export const WriteYourStory = (props) => {
       readTime: 1,
       heading: heading,
     }
-    api.article.createArticle(req)
+    if(prePopulate == true){
+      api.article.updateArticle(req, props.location.state.id)
+        .then((res) => {
+          setSuccess(true);
+          console.log(res)
+        })
+        .catch((err) => {
+          setSuccess(false);
+        })
+    }
+    else{
+      console.log(prePopulate)
+      api.article.createArticle(req)
       .then((res) => {
         setSuccess(true);
         setContent("");
@@ -64,12 +79,12 @@ export const WriteYourStory = (props) => {
       .catch((err) => {
         setSuccess(false)
       })
+    }
   }
 
-  const handlePublish = (event) => {
+  const handlePublish = (event, prePopulate: boolean) => {
     event.preventDefault();
     setIsUploaded(true);
-    console.log(tags);
     const req: CreateArticleRequest = {
       tags: tags,
       content: content,
@@ -78,7 +93,18 @@ export const WriteYourStory = (props) => {
       readTime: 1,
       heading: heading,
     }
-    api.article.createArticle(req)
+    if(prePopulate){
+      api.article.updateArticle(req, props.location.state.id)
+        .then((res) => {
+          setSuccess(true);
+          console.log("Article updated")
+        })
+        .catch((err) => {
+          setSuccess(false);
+        })
+    }
+    else{
+      api.article.createArticle(req)
       .then((res) => {
         setSuccess(true);
         setContent("");
@@ -86,6 +112,7 @@ export const WriteYourStory = (props) => {
       .catch((err) => {
         setSuccess(false)
       })
+    }
   }
 
   let message = null
@@ -198,8 +225,8 @@ export const WriteYourStory = (props) => {
             </Row>
             <Row className="justify-content-md-center">
               <Col xs="12" md={{offset:6, span:6}}>
-                  <Button variant="secondary" className="mx-2" type="submit" name="save" value="Save Story" onClick={handleSave}>Save Story</Button>
-                  <Button variant="secondary" className="mx-2" type="submit" name="save" value="Publish Story" onClick={handlePublish}>Publish Story</Button>
+                  <Button variant="secondary" className="mx-2" type="submit" name="save" value="Save Story" onClick={(event) => {handleSave(event, prePopulated)}}>Save Story</Button>
+                  <Button variant="secondary" className="mx-2" type="submit" name="save" value="Publish Story" onClick={(event)=>  {handlePublish(event, prePopulated)}}>Publish Story</Button>
               </Col>
             </Row>
           </Form>
