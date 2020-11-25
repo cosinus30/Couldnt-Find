@@ -25,7 +25,7 @@ class QuillEditor extends React.Component<MyProps, MyState> {
     constructor(props) {
         super(props);
         this.state = {
-            editorHtml: __ISMSIE__ ? "<p>&nbsp;</p>" : "",
+          editorHtml: this.props.currentHTML ? this.props.currentHTML : __ISMSIE__ ? "<p>&nbsp;</p>" : "",
         };
         this.reactQuillRef = null;
 
@@ -124,7 +124,7 @@ class QuillEditor extends React.Component<MyProps, MyState> {
                     onChange={this.handleChange}
                     modules={this.modules}
                     formats={this.formats}
-                    value={this.props.currentHTML ? this.props.currentHTML : this.state.editorHtml}
+                    value={this.state.editorHtml}
                     placeholder={this.props.placeholder}
                     className="bg-light text-primary"
                     defaultValue={"Hello"}
