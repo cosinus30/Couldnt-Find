@@ -20,6 +20,7 @@
     margin: 2px 2px;
     cursor: pointer;
     border-radius: 32px;
+    font-size: smaller;
 }
 
 .tag:hover {
