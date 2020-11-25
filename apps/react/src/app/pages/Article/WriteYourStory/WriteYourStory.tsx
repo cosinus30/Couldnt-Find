@@ -6,7 +6,9 @@ import {CreateArticleRequest} from '@internship/shared/types';
 import QuillEditor from './QuillEditor';
 import CreatableSelect from 'react-select/creatable';
 
-export const WriteYourStory = () => {
+
+//TODO if article is prepopulated api call will be different.
+export const WriteYourStory = (props) => {
   const [content, setContent] = useState(String);
   const [heading, setHeading] = useState(String);
   const [contentType, setContentType] = useState("Tutorial");
@@ -15,8 +17,10 @@ export const WriteYourStory = () => {
   const [success, setSuccess] = useState(Boolean);
   const [isUploaded, setIsUploaded] = useState(false);
   const [suggestions, setSuggestions] = useState<Tag[]>();
-
+  const [prePopulated, setPrePopulated] = useState(false);
+  
   useEffect(() => {
+    setPrePopulated(props.location.state == null);
     api.article.getSuggestions()
     .then((response) => {
       let myArr = [];
@@ -105,10 +109,6 @@ export const WriteYourStory = () => {
       setTags([...temp]);
       setTagsDisabled(false);
     }
-    // console.group('Value Changed');
-    // console.log(newValue);
-    // console.log(`action: ${actionMeta.action}`);
-    // console.groupEnd();
   };
 
   //TODO All suggestions will come from backend.
@@ -192,6 +192,7 @@ export const WriteYourStory = () => {
                   <QuillEditor
                     placeholder="Start posting something"
                     onEditorChange={handleContentChange}
+                    currentHTML={props.location.state ? props.location.state.content: null}
                   />
               </Col>
             </Row>

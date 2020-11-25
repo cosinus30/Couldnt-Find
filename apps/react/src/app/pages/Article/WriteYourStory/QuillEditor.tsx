@@ -1,12 +1,14 @@
 import React, { ChangeEvent } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import "react-quill/dist/quill.snow.css";
+import { isNullOrUndefined } from 'util';
 
 const __ISMSIE__ = navigator.userAgent.match(/Trident/i) ? true : false;
 
 type MyProps = { 
     onEditorChange: (event: ChangeEvent) => void,
     placeholder: string,
+    currentHTML?: string,
  };
 type MyState = { editorHtml: any};
 
@@ -20,14 +22,14 @@ class QuillEditor extends React.Component<MyProps, MyState> {
     reactQuillRef: any;
     quill: any;
 
-
     constructor(props) {
         super(props);
         this.state = {
             editorHtml: __ISMSIE__ ? "<p>&nbsp;</p>" : "",
         };
-
         this.reactQuillRef = null;
+
+        console.log(this.props.currentHTML)
     }
 
     undoChange() {
@@ -122,9 +124,10 @@ class QuillEditor extends React.Component<MyProps, MyState> {
                     onChange={this.handleChange}
                     modules={this.modules}
                     formats={this.formats}
-                    value={this.state.editorHtml}
+                    value={this.props.currentHTML ? this.props.currentHTML : this.state.editorHtml}
                     placeholder={this.props.placeholder}
                     className="bg-light text-primary"
+                    defaultValue={"Hello"}
                 />
             </div>
         )
