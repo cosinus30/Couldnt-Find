@@ -1,13 +1,14 @@
-import { faBookmark, faEye, faHeart } from '@fortawesome/free-regular-svg-icons';
+import { faBookmark, faEdit, faEye, faHeart, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  PageResponse } from '@internship/shared/api';
 import { Months } from '@internship/shared/types';
 import React from 'react';
 import { Card as RBCard, Col, Row } from 'react-bootstrap';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 import styled from 'styled-components';
 import { isNullOrUndefined } from 'util';
 import mySvg from '../../../../../../apps/react/src/assets/girl-1.svg';
+import { IconButton } from '../../atoms';
 import classes from './Cards.module.css';
 
 
@@ -16,6 +17,7 @@ type CardProps = {
   articleType?: string;
   articleTypeUrl?: string;
   isMyStories?: boolean;
+  deleteHandler?: (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => void
 };
 
 
@@ -31,8 +33,6 @@ export const Cards: React.FC<CardProps> = ({ children, ...props }) => {
   const history = useHistory();
 
   const goToLinkHandler = (id, articleType) => {
-    console.log(id);
-    console.log(articleType);
     history.push({
       pathname: "/" + articleType +'/' + id,
     });
@@ -59,27 +59,43 @@ export const Cards: React.FC<CardProps> = ({ children, ...props }) => {
       return (<Col key={article.id} md="6" xs="12" lg="4">
         <StyledRBCard className={classes.fancy_card + " m-3 bg-mine text-light"}>
           <RBCard.Header>
-            <Row>
-              <Col xs="8">
-                <a>
-                  <Row>
-                    <Col xs="4" className="pr-1">
-                      <img src={mySvg} height="50px" width="100%" alt="React Logo" />
-                    </Col>
-                    <Col xs="8" className="pl-1">
-                      <Row>
-                        <Col xs="12">
-                          {article.author.username}
-                        </Col>
-                        <Col xs="12" >
-                          <small>{ day + " " + Months[month+1] + " " + year}</small>
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row>
-                </a>
-              </Col>
+              {props.isMyStories !== true ? (      <Row>
+                <Col xs="8">
+                  <a>
+                    <Row>
+                      <Col xs="4" className="pr-1">
+                        <img src={mySvg} height="50px" width="100%" alt="React Logo" />
+                      </Col>
+                      <Col xs="8" className="pl-1">
+                        <Row>
+                          <Col xs="12">
+                            {article.author.username}
+                          </Col>
+                          <Col xs="12" >
+                            <small>{ day + " " + Months[month+1] + " " + year}</small>
+                          </Col>
+                        </Row>
+                      </Col>
+                    </Row>
+                  </a>
+                </Col>
+              </Row>) : (      
+              <Row>
+                <Col xs="6">
+                  <IconButton className="text-brand-new bg-secondary"><FontAwesomeIcon className="text-brand-new" icon={faEdit}/> 
+                  <Link to={{ 
+                  pathname: "/write-your-story/"+article.id, 
+                  state: article
+                  }}>
+                  Register
+                  </Link>
+                </IconButton>
+                </Col>
+                <Col xs="6">
+                  <IconButton className="text-brand-new bg-secondary" onClick={props.deleteHandler} ><FontAwesomeIcon className="text-brand-new" icon={faTrashAlt} /> Remove</IconButton>
+                </Col>
             </Row>
+    )}
           </RBCard.Header>
           <RBCard.Img onClick={() => goToLinkHandler(article.id, article.contentType.toLowerCase() + "s")} 
           style={{maxHeight: "17.5vh", objectFit: "cover" , aspectRatio: "3/2"}} 
