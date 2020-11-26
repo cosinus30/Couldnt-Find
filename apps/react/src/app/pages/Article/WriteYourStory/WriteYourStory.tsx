@@ -50,6 +50,7 @@ export const WriteYourStory = (props) => {
 
   const handleSave = (event, prePopulate: boolean) => {
     event.preventDefault();
+    if(tagsDisabled) return;
     setIsUploaded(true);
     const req: CreateArticleRequest = {
       tags: tags,
@@ -84,6 +85,7 @@ export const WriteYourStory = (props) => {
 
   const handlePublish = (event, prePopulate: boolean) => {
     event.preventDefault();
+    if(tagsDisabled) return;
     setIsUploaded(true);
     const req: CreateArticleRequest = {
       tags: tags,
