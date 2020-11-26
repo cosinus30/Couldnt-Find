@@ -125,6 +125,17 @@ export const Navigation = () => {
                   >
                     Profile
                 </NavLink>
+                    <NavLink
+                        className="dropdown-item text-light"
+                        to="/user/articles"
+                        type="button"
+                        onClick={() => {
+                          dispatch({ type: '@temp/ERROR_REQUIRED', payload: null });
+                          dispatch({ type: '@temp/SUCCESS_REQUIRED', payload: null });
+                        }}
+                      >
+                        My Stories
+                    </NavLink>
                     <DropdownItem to={location.pathname} onClick={handleOpen} className="text-light">
                       Logout
                     </DropdownItem>
