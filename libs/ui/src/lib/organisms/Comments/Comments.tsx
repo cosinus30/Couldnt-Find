@@ -11,6 +11,8 @@ import classes from './Comment.module.css'
 
 type CommentProps = {
     comments: CommentResponse[];
+    addCommentHandler : any;
+    onContentChange : any;
 };
 
 
@@ -25,6 +27,14 @@ export const Comments: React.FC<CommentProps>= ({ children,...props}) => {
     else{
         rendering = (
             <React.Fragment>
+                <Card className={"my-3 bg-secondary text-light"}>
+                    <Card.Body>  
+                        <Form onSubmit={props.addCommentHandler}>
+                            <Form.Control className="bg-secondary text-light" onChange={props.onContentChange} as="textarea" rows={3} placeholder="Well. Come on then..." />
+                            <Button className="bg-primary float-right" type="submit" name="save">Add</Button>
+                        </Form>
+                    </Card.Body>
+                </Card>
             {
                 props.comments.map((comment) => {
                     const relDate = new Date(comment.commentDate); 

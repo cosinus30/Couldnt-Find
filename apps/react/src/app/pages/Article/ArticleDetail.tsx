@@ -127,21 +127,9 @@ export const ArticleDetail = (props) => {
         );
     }
     let commentsRender = <Spinner/>;
-    let makeComment = null;
+    console.log(commentLoading + " " +  commentShow)
     if(!commentLoading && commentShow){
-        commentsRender =  <Comments comments={comments} />
-        makeComment = (
-            <React.Fragment>
-                <Card className={"my-3 bg-secondary text-light"}>
-                    <Card.Body>  
-                        <Form onSubmit={addCommentHandler}>
-                            <Form.Control className="bg-secondary text-light" onChange={onContentChange} as="textarea" rows={3} placeholder="Well. Come on then..." />
-                            <Button className="bg-primary float-right" type="submit" name="save">Add</Button>
-                        </Form>
-                    </Card.Body>
-                </Card>
-            </React.Fragment>
-        );
+        commentsRender =  <Comments addCommentHandler={addCommentHandler} onContentChange={onContentChange} comments={comments} />
     }
 
     return (
@@ -149,7 +137,6 @@ export const ArticleDetail = (props) => {
             <Row className="justify-content-md-center">
                 <Col md="9">
                     {rendering}
-                    {makeComment}
                     {commentsRender}
                 </Col>
             </Row>
