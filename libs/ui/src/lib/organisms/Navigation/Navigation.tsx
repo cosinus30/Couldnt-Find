@@ -46,20 +46,9 @@ export const Navigation = () => {
 
 
   return (
-    <Navbar sticky="top" className="navbar-expand-sm bg-secondary">
-      <button
-        className="custom-toggler navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbar"
-        aria-controls="navbar"
-        aria-expanded={!isNavCollapsed}
-        aria-label="Toggle navigation"
-        onClick={handleNavCollapse}
-      >
-        <span className="navbar-toggler-icon" />
-      </button>
-      <div className={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse`} id="navbar">
+    <Navbar sticky="top" expand="lg" className="bg-secondary">
+      <Navbar.Toggle aria-controls="basic-navbar-nav" className="bg-light" />
+      <Navbar.Collapse>
         <Nav className="mr-auto">
           <li className="navbar-brand">
             <NavLink exact to="/" className="nav-link"
@@ -121,7 +110,7 @@ export const Navigation = () => {
               </li>
               <li className="nav-link float-right">
                 <Dropdown alignRight className="text-light"  title="Hello" id="basic-nav-dropdown ">
-                  <DropdownToggle variant="secondary">
+                  <DropdownToggle className="" variant="secondary">
                     <FaUserAlt className="text-light"/>
                   </DropdownToggle>
                   <DropdownMenu className="bg-secondary border-light rounded-bottom rounded-left ">
@@ -167,7 +156,12 @@ export const Navigation = () => {
                     Write your story
                         </NavLink>
                 </li>
-                <Dropdown className="nav-link uk-align-right" title="Account" id="basic-nav-dropdown">
+                <Dropdown alignRight className="text-light my-auto"  title="Hello" id="basic-nav-dropdown ">
+                  <DropdownToggle variant="secondary">
+                    <FaUserAlt className="text-light"/>
+                  </DropdownToggle>
+                  <DropdownMenu className="bg-secondary border-light rounded-bottom rounded-left ">
+                  
                   <NavLink
                     className="dropdown-item text-light"
                     to="/register"
@@ -188,11 +182,12 @@ export const Navigation = () => {
                   >
                     Sign In
                 </NavLink>
+                </DropdownMenu>
                 </Dropdown>
               </Nav>
             )
         }
-      </div >
+      </Navbar.Collapse>
     </Navbar >
   );
 };
