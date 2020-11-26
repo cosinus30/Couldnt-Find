@@ -1,4 +1,5 @@
 import { faBookmark, faEdit, faEye, faHeart, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  PageResponse } from '@internship/shared/api';
 import { Months } from '@internship/shared/types';
@@ -113,9 +114,10 @@ export const Cards: React.FC<CardProps> = ({ children, ...props }) => {
             </div>
             
             <h3>{article.heading}</h3>
-            <div style={{height:100, overflowY: 'hidden',maxWidth:'350px' , color: '#E9D7DA !important'}}>
+            <div style={{maxHeight:100, overflowY: 'hidden',maxWidth:'350px' , color: '#E9D7DA !important'}}>
               <div  dangerouslySetInnerHTML={{__html : article.content}}></div>
             </div>
+            <p className={classes.readMore} onClick={() => goToLinkHandler(article.id, article.contentType.toLowerCase() + "s")}>Read more <FontAwesomeIcon icon={faChevronRight}/></p>
           </RBCard.Body>
           <hr className="bg-primary my-1"/>
             <Row className="mx-1 my-1">
