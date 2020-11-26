@@ -21,7 +21,6 @@ export const Articles = () => {
     api.article
       .getArticles(articleType, query.get("page"), query.get("sort"), QueryParams.defaultSize, query.get("time"))
       .then((response) => {
-        console.log(response);
         setPage(response);
         setLoading(false);
       })
@@ -61,7 +60,6 @@ export const Articles = () => {
       );
     }
 
-    console.log(page)
     rendering = (<Cards page={page} articleType={articleType}/>);
     paginationBasic = (
         <div>

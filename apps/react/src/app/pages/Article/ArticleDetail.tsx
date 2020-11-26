@@ -24,7 +24,7 @@ export const ArticleDetail = (props) => {
                 setLoading(false);
             })
             .catch((err) => {
-                console.log("something went wrong");
+                console.error("something went wrong");
             })
     }, []);
 
@@ -36,7 +36,7 @@ export const ArticleDetail = (props) => {
                     setArticleDetail({ ...articleDetail, liked: false });
                 })
                 .catch((error) => {
-                    console.log("something went wrong");
+                    console.error("something went wrong");
                 })
         }else{
             api.article.like(articleId)
@@ -44,7 +44,7 @@ export const ArticleDetail = (props) => {
                 setArticleDetail({ ...articleDetail, liked: true });
             })
             .catch((error) => {
-                console.log("something went wrong");
+                console.error("something went wrong");
             })
         }
     }
@@ -57,7 +57,7 @@ export const ArticleDetail = (props) => {
                     setArticleDetail({ ...articleDetail, bookmarked: false })
                 })
                 .catch((error) => {
-                    console.log("Something went wrong!");
+                    console.error("Something went wrong!");
                 })
         else {
             api.article.bookmark(articleId)
@@ -65,7 +65,7 @@ export const ArticleDetail = (props) => {
                     setArticleDetail({ ...articleDetail, bookmarked: true })
                 })
                 .catch((error) => {
-                    console.log("Something went wrong!");
+                    console.error("Something went wrong!");
                 })
         }
     }
@@ -81,8 +81,7 @@ export const ArticleDetail = (props) => {
                 setCommentShow(true);
             })
             .catch((error) => {
-                console.log(error);
-                console.log("Something went wrong!");
+                console.error("Something went wrong!");
             })
     }
 
@@ -96,8 +95,7 @@ export const ArticleDetail = (props) => {
                 setCommentLoading(false);
             })
             .catch((error) => {
-                console.log(error);
-                console.log("Something went wrong!");
+                console.error("Something went wrong!");
             })
         }
         else{
@@ -127,7 +125,6 @@ export const ArticleDetail = (props) => {
         );
     }
     let commentsRender = <Spinner/>;
-    console.log(commentLoading + " " +  commentShow)
     if(!commentLoading && commentShow){
         commentsRender =  <Comments addCommentHandler={addCommentHandler} onContentChange={onContentChange} comments={comments} />
     }
