@@ -2,3 +2,23 @@ div pre{
     color: #E9D7DA !important;
     background-color: #212121;
 }
+
+
+.tag{
+    background-color:  #212121;
+    border: none;
+    color: #E9D7DA;
+    padding: 4px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 2px 2px;
+    cursor: pointer;
+    border-radius: 32px;
+    font-size: smaller;
+}
+
+.tag:hover {
+    background-color: #9affe1;
+    color: #151618;
+}

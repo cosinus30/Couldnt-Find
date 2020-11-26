@@ -3,6 +3,7 @@ import React from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
 import { IconButtonRow, IconButtonRowProps } from '../../molecules';
 import classes from './DetailedCard.module.css'
+import classes2 from './Cards.module.css'
 import mySvg from '../../../../../../apps/react/src/assets/girl-1.svg';
 import { Months } from '@internship/shared/types';
 import { faBookmark, faEye, faHeart } from '@fortawesome/free-regular-svg-icons';
@@ -29,14 +30,14 @@ export const DetailedCard: React.FC<DetailCardProps> = ({ children, ...props }) 
       <Card.Body className="pt-0">
         <Card.Header >
           <Row>
-            <Col xs="4">
+            <Col md="4" xs="12">
               <a href="#">
                 <Row>
                   <Col xs="4" className="pr-1">
                     <img src={mySvg} height="50px" width="100%" alt="React Logo" />
                   </Col>
                   <Col xs="8" className="pl-1">
-                    <Row>
+                    <Row className="text-light">
                       <Col xs="12">
                         {props.articleDetail.article.author.username}
                       </Col>
@@ -48,12 +49,21 @@ export const DetailedCard: React.FC<DetailCardProps> = ({ children, ...props }) 
                 </Row>
               </a>
             </Col>
-            <Col xs="8">
+            <Col xs="12" md="8">
               <IconButtonRow {...props.userInteraction}></IconButtonRow>
             </Col>
           </Row>
         </Card.Header>
-        <Card.Title>{props.articleDetail.article.heading}</Card.Title>
+        <Row>
+            <div className="m-2">
+              {props.articleDetail.article.tags.map((tag) => {
+                return (<div className={classes.tag} key={tag.tagName}>#{tag.tagName}</div>)
+              })}
+            </div>
+          </Row>
+        <h1 className="text-brand-new">{props.articleDetail.article.heading}</h1>
+        <img style={{ objectFit: "cover", width: '100%' , aspectRatio: "3/2", borderRadius:'8px'}} 
+          src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80'/>
         <div>
           <div className={classes.pre} dangerouslySetInnerHTML={{__html : props.articleDetail.article.content}}></div>
         </div>
