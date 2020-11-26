@@ -11,15 +11,17 @@ import { isNullOrUndefined } from 'util';
 //TODO if article is prepopulated api call will be different.
 export const WriteYourStory = (props) => {
   const [content, setContent] = useState(String);
-  const [heading, setHeading] = useState(String);
-  const [contentType, setContentType] = useState("Tutorial");
-  const [tags, setTags] = useState([]);
+  const [heading, setHeading] = useState(isNullOrUndefined(props.location.state) ? "" : props.location.state.heading);
+  const [contentType, setContentType] = useState(isNullOrUndefined(props.location.state) ? "Tutorial" : props.location.state.contentType);
+  const [tags, setTags] = useState(isNullOrUndefined(props.location.state) ? [] : props.location.state.tags.map((tag) => {
+    return ({label: tag.tagName, value: tag.tagName});
+  }));
   const [tagsDisabled, setTagsDisabled] = useState(false);
   const [success, setSuccess] = useState(Boolean);
   const [isUploaded, setIsUploaded] = useState(false);
   const [suggestions, setSuggestions] = useState<Tag[]>();
   const [prePopulated, setPrePopulated] = useState(false);
-  const [imageUrl, setImageUrl] = useState();
+  const [imageUrl, setImageUrl] = useState(isNullOrUndefined(props.location.state) ? "" : props.location.state.imageUrl);
   
   useEffect(() => {
     console.log(props.location.state);
@@ -70,7 +72,6 @@ export const WriteYourStory = (props) => {
       api.article.updateArticle(req, props.location.state.id)
         .then((res) => {
           setSuccess(true);
-          console.log(res)
         })
         .catch((err) => {
           setSuccess(false);
@@ -145,6 +146,7 @@ export const WriteYourStory = (props) => {
       })
       setTags([...temp]);
       setTagsDisabled(false);
+      console.log("I am here")
     }
   };
 
@@ -188,7 +190,7 @@ export const WriteYourStory = (props) => {
     <React.Fragment>
       <p className="text-light">{tagsDisabled ? "You can add up to 5 tags" : "Select tag"}</p>
       <CreatableSelect
-        defaultValue={[]}
+        defaultValue={tags}
         isMulti
         name="Tags"
         options={suggestions}
