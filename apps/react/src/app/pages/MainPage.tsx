@@ -22,7 +22,7 @@ export const MainPage = () => {
         setTutorialsLoading(false);
       }
     ).catch((error) => {
-      console.log("Uuups");
+      console.error("Uuups");
     })
 
     api.article.getArticles("insights", "0", QueryParams["Most recent"], QueryParams.mainPageSize, QueryParams.Infinity)
@@ -31,7 +31,7 @@ export const MainPage = () => {
         setInsightsLoading(false);
       }
     ).catch((error) => {
-      console.log("Uuups");
+      console.error("Uuups");
     })
 
     api.article.getArticles("engineerings", "0", QueryParams["Most recent"], QueryParams.mainPageSize, QueryParams.Infinity)
@@ -40,7 +40,7 @@ export const MainPage = () => {
         setEngineeringsLoading(false);
       }
     ).catch((error) => {
-      console.log("Uuups");
+      console.error("Uuups");
     })
   },[])
 
