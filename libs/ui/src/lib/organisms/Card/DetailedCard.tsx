@@ -62,8 +62,12 @@ export const DetailedCard: React.FC<DetailCardProps> = ({ children, ...props }) 
             </div>
           </Row>
         <h1 className="text-brand-new">{props.articleDetail.article.heading}</h1>
-        <img style={{ objectFit: "cover", width: '100%' , aspectRatio: "3/2", borderRadius:'8px'}} 
-          src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80'/>
+        {props.articleDetail.article.imageUrl 
+          ? <img style={{ objectFit: "cover", width: '100%' , aspectRatio: "3/2", borderRadius:'8px'}} 
+          src={props.articleDetail.article.imageUrl}/>
+          : null
+        }
+
         <div>
           <div className={classes.pre} dangerouslySetInnerHTML={{__html : props.articleDetail.article.content}}></div>
         </div>

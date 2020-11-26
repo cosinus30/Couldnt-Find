@@ -41,6 +41,7 @@ interface Article {
     viewCount: number;
     commentCount: number;
     tags: Tag[];
+    imageUrl: string;
 }
 
 interface ArticlesResponse {
@@ -56,6 +57,7 @@ interface ArticlesResponse {
     bookmarkCount: number;
     viewCount: number;
     tags: Tag[];
+    imageUrl: string;
 }
 
 

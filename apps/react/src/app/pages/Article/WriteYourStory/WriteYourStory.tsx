@@ -19,6 +19,7 @@ export const WriteYourStory = (props) => {
   const [isUploaded, setIsUploaded] = useState(false);
   const [suggestions, setSuggestions] = useState<Tag[]>();
   const [prePopulated, setPrePopulated] = useState(false);
+  const [imageUrl, setImageUrl] = useState();
   
   useEffect(() => {
     console.log(props.location.state);
@@ -47,6 +48,10 @@ export const WriteYourStory = (props) => {
     setContentType(event.target.value);
   }
 
+  const handleImageUrlChange = (event) => {
+    setImageUrl(event.target.value);
+  }
+
 
   const handleSave = (event, prePopulate: boolean) => {
     event.preventDefault();
@@ -59,6 +64,7 @@ export const WriteYourStory = (props) => {
       published: false,
       readTime: 1,
       heading: heading,
+      imageUrl: imageUrl,
     }
     if(prePopulate == true){
       api.article.updateArticle(req, props.location.state.id)
@@ -94,7 +100,9 @@ export const WriteYourStory = (props) => {
       published: true,
       readTime: 1,
       heading: heading,
+      imageUrl: imageUrl,
     }
+
     if(prePopulate){
       api.article.updateArticle(req, props.location.state.id)
         .then((res) => {
@@ -206,7 +214,7 @@ export const WriteYourStory = (props) => {
                 </Form.Group>
               </Col>
               <Col md="4">
-                <Form.Group controlId="exampleForm.ControlSelect1">
+                <Form.Group controlId="exampleForm.ControlSelect2">
                   <Form.Label className="text-light">Type of the article</Form.Label>
                   <Form.Control className="bg-secondary border-0 text-light" as="select" value={contentType} onChange={handleContentTypeChange}>
                     <option value="Tutorial">Tutorial</option>
@@ -217,6 +225,18 @@ export const WriteYourStory = (props) => {
               </Col>
             </Row>
             <Row className="justify-content-md-center">
+            <Col xs="12">
+                <Form.Group controlId="exampleForm.ControlSelect3">
+                  <Form.Label className="text-light">Image url</Form.Label>
+                  <Form.Control className="bg-secondary border-0 text-light" value={imageUrl} onChange={handleImageUrlChange} placeholder="Enter image url">
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+              <Col xs="9">
+                {imageUrl ? <img src={imageUrl} style={{width:"100%", maxHeight:"440px"}}/> : null}  
+              </Col>
+            </Row>
+            <Row className="justify-content-md-center my-2">
               <Col xs="12" md="9">
                   <QuillEditor
                     placeholder="Start posting something"

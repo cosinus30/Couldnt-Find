@@ -97,10 +97,14 @@ export const Cards: React.FC<CardProps> = ({ children, ...props }) => {
             </Row>
     )}
           </RBCard.Header>
-          <RBCard.Img onClick={() => goToLinkHandler(article.id, article.contentType.toLowerCase() + "s")} 
-          style={{maxHeight: "17.5vh", objectFit: "cover" , aspectRatio: "3/2"}} 
-          variant="top" 
-          src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80' />
+          {article.imageUrl 
+            ? <RBCard.Img onClick={() => goToLinkHandler(article.id, article.contentType.toLowerCase() + "s")} 
+            style={{maxHeight: "17.5vh", objectFit: "cover" , aspectRatio: "3/2"}} 
+            variant="top" 
+            src={article.imageUrl}/>
+            : null}
+
+
           <RBCard.Body className={classes.CardBody}>
             <div className="my-2">
             {article.tags.map((tag) => {

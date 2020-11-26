@@ -5,4 +5,5 @@ export interface CreateArticleRequest {
     contentType: string;
     readTime: number;
     heading: string;
+    imageUrl: string;
 }
