@@ -11,18 +11,18 @@ export const MyStories = () => {
     const [page, setPage] = useState<PageResponse>();  
     const [loading, setLoading] = useState(true);
     const [pageNo, setPageNo] = useState(query.get("page") ? query.get("page") : "0")
-    const [articleType, setArticleType] = useState(query.get("articleType"))
-    const [isReleased, setIsReleased] = useState(query.get("released") ? query.get("released") : "published" )
+    const [articleType, setArticleType] = useState(query.get("articleType") ? query.get("articleType") : "All")
+    const [isReleased, setIsReleased] = useState(query.get("released") ? query.get("released") : "All" )
 
     useEffect(() => {
-        api.user.getArticles(articleType,pageNo)
+        api.user.getArticles(articleType,pageNo,isReleased)
             .then((response) => {
                 setPage(response)
                 setLoading(false);
                 console.log(response);
                 
             })
-    },[pageNo, articleType])
+    },[pageNo, articleType, isReleased, loading])
     
 
     const articleTypeHandler = (event) => {
@@ -41,10 +41,10 @@ export const MyStories = () => {
       setIsReleased(event.target.value);
     }
 
-    //TODO delete that goddamn article.
     const deleteHandler = (event, articleId: number) => {
       api.article.removeArticle(articleId)
         .then((res) => {
+          setLoading(true);
           console.log("Removal successful")
         })
         .catch((err) => {
@@ -53,9 +53,9 @@ export const MyStories = () => {
     }
 
     let items = [];
-    const articleTypes = ["tutorials","insights","engineerings"];
+    const articleTypes = ["All", "Tutorial","Insight","Engineering" ];
     const articleTypesDropdown = (<Dropdown  options={articleTypes} selected={articleType} onSelectHandler={articleTypeHandler}/>);
-    const sitTypes = ["Released", "Draft"];
+    const sitTypes = [ "All", "Released", "Draft"];
     const sitTypesDropdown = (<Dropdown options={sitTypes} selected={isReleased} onSelectHandler={sitHandler}/>)
 
     let rendering = <Spinner/>

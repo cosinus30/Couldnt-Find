@@ -248,9 +248,9 @@ export const WriteYourStory = (props) => {
               </Col>
             </Row>
             <Row className="justify-content-md-center">
-              <Col xs="12" md={{offset:6, span:6}}>
-                  <Button variant="secondary" className="mx-2" type="submit" name="save" value="Save Story" onClick={(event) => {handleSave(event, prePopulated)}}>Save Story</Button>
-                  <Button variant="secondary" className="mx-2" type="submit" name="save" value="Publish Story" onClick={(event)=>  {handlePublish(event, prePopulated)}}>Publish Story</Button>
+              <Col xs="12" md="9" style={{display: 'flex', justifyContent: 'flex-end'}}>
+                  <Button variant="light" className="mx-2 text-primary" type="submit" name="save" value="Save Story" onClick={(event) => {handleSave(event, prePopulated)}}>Save Story</Button>
+                  <Button variant="brand-new" className="mx-2 text-primary" type="submit" name="save" value="Publish Story" onClick={(event)=>  {handlePublish(event, prePopulated)}}>Publish Story</Button>
               </Col>
             </Row>
           </Form>

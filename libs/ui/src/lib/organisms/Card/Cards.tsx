@@ -51,7 +51,7 @@ export const Cards: React.FC<CardProps> = ({ children, ...props }) => {
 
   return (
     <React.Fragment>
-    <Row>
+    <Row style={{width:'100%'}}>
     {    props.page.content?.map((article) => {
         const relDate = new Date(article.releaseDate); 
         var day = relDate.getDate(),
