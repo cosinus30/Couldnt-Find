@@ -40,6 +40,7 @@ interface Article {
     likeCount: number;
     viewCount: number;
     commentCount: number;
+    tags: Tag[];
 }
 
 interface ArticlesResponse {
