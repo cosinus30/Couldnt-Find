@@ -1,15 +1,18 @@
-This project was generated using [Nx](https://nx.dev).
+# Publishing Platform 
+A medium like publishing platform for developers where you can share your stories.
 
-This project is a yarn project. Because of that you have to install yarn.
+You can access the demo app from [here](https://innova-staj.web.app/)
 
-Please install yarn in this web site => https://classic.yarnpkg.com/en/docs/install
+You can access the rest api repo from [here](https://github.com/cosinus30/SpringBootBackend)
 
-You must be install node.js to install yarn.
+## Techs used
+- React
+- React Bootstrap
+- React Router
 
-Then in terminal you should run this command => yarn install
-
-Finally program is ready to start. If you want to start program =>
-
-You should run "yarn start" in terminal.
-
-Server of this application is https://github.com/cosinus30/SpringBootBackend.
+## Capabilities
+1. Users can write stories using wysiwyg (it's a real term :')) editor.
+2. Stories have several categories such as Engineering, Insights, Tutorials and categories can be extended easily.
+3. Stories may have up to five tags. (There is no constraint on what tags should be)
+4. All stories are accessible to all visitors, users can make a comment, bookmark the article, or like the article. 
+5. Articles can be sorted by most popular/most recent/most liked, and filtered by 3 days/week/month/infinity period.
